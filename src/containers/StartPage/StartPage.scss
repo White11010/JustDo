@@ -1,0 +1,14 @@
+.start {
+  max-height: 100vh;
+  margin: 0 auto;
+  max-width: 1070px;
+  display: flex;
+  overflow: visible;
+}
+
+.start__container {
+  margin-top: 244px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}

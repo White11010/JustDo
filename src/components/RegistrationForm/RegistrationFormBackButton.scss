@@ -1,0 +1,17 @@
+@import "../../assets/scss/variables";
+
+.form__back-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px !important;
+  height: 50px !important;
+  margin-right: 12px;
+  border: 1px solid $lightgray-main;
+  cursor: pointer;
+}
+
+.form__back-button:hover {
+  background-color: $blue-main;
+}
+

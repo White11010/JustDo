@@ -1,0 +1,24 @@
+@import "../../assets/scss/variables";
+
+.header__nav {
+  margin-left: 47px;
+}
+
+.header__list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header__item {
+  margin-right: 54px;
+  color: $bluedark-main;
+  font-family: 'Circe';
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+}
+
+.header__item:last-child {
+  margin-right: 0;
+}

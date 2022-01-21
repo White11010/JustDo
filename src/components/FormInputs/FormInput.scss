@@ -1,0 +1,53 @@
+@import "src/assets/scss/variables";
+
+.form__input-container {
+  position: relative;
+  margin: 0;
+  width: 406px;
+}
+
+.form__input {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 50px;
+  padding: 14px 0 14px 20px;
+  border: 1px solid #D7D7D7;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 120%;
+  color: #000850;
+}
+.form__input:focus {
+  border: 1px solid #B7B7BF;
+}
+.form__input::placeholder {
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 120%;
+  color: #B7B7BF;
+}
+
+.form__label {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  left: 11px;
+  top: -7px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  color: #6F7D97;
+  background-color: white;
+  z-index: 99;
+}
+

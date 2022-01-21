@@ -1,0 +1,62 @@
+@import "../../assets/scss/variables";
+
+.dropzone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 406px;
+  height: 153px;
+  margin-top: 31px;
+  margin-bottom: 30px;
+  border: 1px dashed rgba(3, 160, 232, 0.5);
+  box-sizing: border-box;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.dropzone__title {
+  margin-top: 10px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 120%;
+  color: $bluedark-main;
+}
+
+.dropzone__title--blue {
+  color: $blue-main;
+}
+.dropzone__info {
+  margin-top: 2px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  color: $medium-gray;
+}
+
+.dropzone__dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 12px;
+  border-radius: 50%;
+  background-color: $medium-gray;
+}
+
+.dropzone__prompt {
+  position: absolute;
+  left: 21px;
+  top: -9px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  color: $headline-gray;
+  background-color: white;
+}

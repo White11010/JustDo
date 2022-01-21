@@ -1,0 +1,19 @@
+@import "../../assets/scss/variables";
+
+.registration__link {
+  margin-top: 18px;
+  margin-bottom: 30px;
+  font-family: 'Circe';
+  font-size: 18px;
+  line-height: 120%;
+}
+
+.registration__link--gray {
+  font-weight: normal;
+  color: $medium-gray;
+}
+.registration__link--blue {
+  font-weight: 700;
+  color: $blue-main;
+  cursor: pointer;
+}
