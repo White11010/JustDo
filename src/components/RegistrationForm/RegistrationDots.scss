@@ -1,0 +1,29 @@
+@import "../../assets/scss/variables";
+
+.form__dots-container {
+  display: flex;
+  flex-direction: row;
+  width: 81px;
+  height: 11px;
+}
+
+.form__dot {
+  width: 11px;
+  height: 11px;
+  margin-right: 24px;
+  border-radius: 50%;
+  background-color: $blue-main;
+}
+
+.form__dot:last-child {
+  margin-right: 0;
+}
+
+.form__dot--filled {
+  opacity: 1;
+}
+
+.form__dot--empty {
+  opacity: 0.16;
+}
+

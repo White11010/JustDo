@@ -1,0 +1,32 @@
+@import 'HeaderNav';
+
+.header__buttons-container {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  font-family: Circe;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.header__registration-button {
+  margin-right: 22px;
+  color: $blue-main;
+  padding: 7px 22px;
+  border: 1px solid $blue-main;
+
+}
+.header__registration-button:hover {
+  color: white;
+  background-color: $blue-main--hover;
+}
+
+.header__login-button {
+  padding: 8px 22px;
+  background-color: $blue-main;
+  color: white;
+}
+.header__login-button:hover {
+  background-color: $blue-main--hover;
+}

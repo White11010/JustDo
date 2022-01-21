@@ -1,0 +1,42 @@
+@import "src/assets/scss/variables";
+
+.login {
+  margin: 0 65px 0 43px;
+  flex-grow: 1;
+}
+
+.login__container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.login__button {
+  width: 100%;
+  height: 50px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.login__recover-link {
+  margin-bottom: 24px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  color: $headline-gray;
+}
+
+.login__support-link {
+  margin-top: 30px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  color: $blue-main;
+}

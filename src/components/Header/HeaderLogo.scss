@@ -1,0 +1,10 @@
+@import "../../assets/scss/variables";
+
+.header__title {
+  margin-left: 24px;
+  color: $blue-main;
+  font-family: 'Circe';
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 35px;
+}
