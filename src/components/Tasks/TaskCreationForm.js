@@ -118,11 +118,11 @@ function TaskCreationForm(props) {
                 key="category"
 
             />
-            {/*<FormSelectInput*/}
-            {/*    label="Notification"*/}
-            {/*    style={{flexBasis: 'calc(50% - 12px)',marginBottom: '37px', marginRight: '12px'}}*/}
-
-            {/*/>*/}
+            <FormSelectInput
+                label="Notification"
+                style={{flexBasis: 'calc(50% - 12px)',marginBottom: '37px', marginRight: '12px'}}
+                options={notificationOptions}
+            />
             <FormSelectInput
                 options={priorityOptions}
                 label="Set Color Priority"
