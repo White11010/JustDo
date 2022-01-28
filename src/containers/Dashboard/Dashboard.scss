@@ -1,0 +1,27 @@
+.dashboard {
+  height: 100vh;
+  display: grid;
+  grid-template-areas: "left-sidebar tasks right-sidebar";
+  grid-template-columns: 280px 1fr 284px;
+}
+
+.dashboard__sidebar--left {
+  grid-area: left-sidebar;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 40px 0 40px 24px;
+}
+
+.dashboard__sidebar--right {
+  grid-area: right-sidebar;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 44px 22px;
+}
+
+.dashboard__tasks {
+  grid-area: tasks;
+  margin: 40px 40px 0 40px;
+}

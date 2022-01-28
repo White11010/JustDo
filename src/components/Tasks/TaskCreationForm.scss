@@ -1,0 +1,18 @@
+.task-creation__container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.task-creation__actions {
+  margin-left: auto;
+}
+
+.task-creation__button {
+  padding: 8px 22px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 27px;
+}

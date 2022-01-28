@@ -1,0 +1,34 @@
+@import "src/assets/scss/variables";
+
+.groups {
+
+}
+
+.tasks__header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tasks__title {
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 24px;
+  color: $bluedark-main;
+}
+
+.tasks__arrow-icon {
+  margin-left: 10px;
+}
+
+.tasks__add-button {
+  margin: 0 0 0 auto;
+  padding: 8px 22px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 27px;
+}

@@ -1,0 +1,64 @@
+@import "src/assets/scss/variables";
+
+.categories {
+  display: flex;
+  flex-direction: column;
+}
+
+.categories__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.categories__title {
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  color: $headline-gray;
+}
+
+.categories__add-button {
+  margin: 0 0 0 auto;
+  cursor: pointer;
+  user-select: none;
+}
+
+.categories__select-all-button {
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+  color: $bluedark-main;
+}
+
+.categories__item {
+  position: relative;
+  display: flex;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.categories__item-title {
+  margin-left: 10px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(0, 8, 80, 0.75);
+}
+
+.categories__item--active::before {
+  content: '';
+  position: absolute;
+  width: 3px;
+  height: 100%;
+  top: 0;
+  left: -24px;
+  background-color: $blue-main;
+  cursor: auto;
+}

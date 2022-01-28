@@ -1,14 +1,20 @@
 import React from 'react';
 import StartModalTitle from "../../components/StartModal/StartModalTitle";
-import {FormControl, TextField} from "@mui/material";
 import {Controller, useForm} from "react-hook-form";
-import StartModalButton from "../../components/StartModal/StartModalButton";
 import "./LoginForm.scss";
 import axios from "axios";
 import LoginFormLink from "../../components/LoginForm/LoginFormLink";
 import FormInput from "../../components/FormInputs/FormInput";
+import {useNavigate} from "react-router";
+import {useDispatch} from "react-redux";
+import {setUserData} from "../../features/userSlice";
 
 function LoginForm(props) {
+
+    const dispatch = useDispatch();
+
+    const navigate = useNavigate();
+
     const { register, handleSubmit, watch, errors, formState } = useForm({ mode: "onChange" });
 
     const sendLoginData = (data) => {
@@ -27,7 +33,12 @@ function LoginForm(props) {
 
     const onSubmit = (data) => {
         sendLoginData(data)
-            .then(response => console.log(response))
+            .then(response => {
+                console.log(response);
+                localStorage.setItem('authorization', response.data.token);
+                dispatch(setUserData(true));
+                navigate('/dashboard');
+            })
             .catch(error => console.log(error.response))
     };
 
@@ -36,43 +47,6 @@ function LoginForm(props) {
         <div className="login">
             <StartModalTitle title="Log in"/>
             <LoginFormLink handleRegistration={props.handleRegistration}/>
-            {/*<form onSubmit={handleSubmit(onSubmit)} className="registration-form__container">*/}
-            {/*    <FormControl className="registration__input">*/}
-            {/*        <Controller*/}
-            {/*            name="email"*/}
-            {/*            control={control}*/}
-            {/*            defaultValue=""*/}
-            {/*            label="Email"*/}
-            {/*            rules={{required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i}}*/}
-            {/*            as={TextField}*/}
-            {/*        />*/}
-            {/*    </FormControl>*/}
-            {/*    <FormControl className="form-control">*/}
-            {/*        <Controller*/}
-            {/*            name="password"*/}
-            {/*            type="password"*/}
-            {/*            control={control}*/}
-            {/*            defaultValue=""*/}
-            {/*            label="Password"*/}
-            {/*            rules={{required: true, minLength: 8,}}*/}
-            {/*            as={TextField}*/}
-            {/*            sx={{*/}
-            {/*                mt: '30px',*/}
-            {/*                mb: '24px'*/}
-            {/*            }}*/}
-            {/*        />*/}
-            {/*    </FormControl>*/}
-            {/*    <FormControl*/}
-            {/*        sx={{*/}
-            {/*            display: 'flex',*/}
-            {/*            flexDirection: 'row',*/}
-            {/*            mt: '30px',*/}
-            {/*            mb: '24px'*/}
-            {/*        }}*/}
-            {/*    >*/}
-            {/*        <StartModalButton type="submit" disabled={!formState.isValid}/>*/}
-            {/*    </FormControl>*/}
-            {/*</form>*/}
             <form onSubmit={handleSubmit(onSubmit)} className="login__container">
                 <FormInput
                     ref={register({ pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, required: true })}

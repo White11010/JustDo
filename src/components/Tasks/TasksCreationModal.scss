@@ -1,0 +1,12 @@
+@import "src/assets/scss/variables";
+
+.task-modal__title {
+  margin-right: auto;
+  margin-bottom: 37px;
+  font-family: Circe;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 24px;
+  color: $bluedark-main;
+}

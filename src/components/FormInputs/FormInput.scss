@@ -3,7 +3,6 @@
 .form__input-container {
   position: relative;
   margin: 0;
-  width: 406px;
 }
 
 .form__input {
@@ -32,6 +31,18 @@
   font-size: 18px;
   line-height: 120%;
   color: #B7B7BF;
+}
+
+.form-validation-error-message {
+  position: absolute;
+  left: 11px;
+  bottom: -18px;
+  font-family: Circe;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  color: $red-main;
 }
 
 .form__label {

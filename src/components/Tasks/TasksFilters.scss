@@ -1,0 +1,53 @@
+@import "src/assets/scss/variables";
+
+.tasks__filters {
+  display: flex;
+  flex-direction: row;
+  margin-left: 50px;
+}
+
+.tasks__filters-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 61px;
+  height: 44px;
+  border: 1px solid #D7D7D7;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.tasks__calendar {
+  margin-left: 10px;
+}
+
+.tasks__sort {
+  width: 242px;
+  margin-left: 10px;
+}
+
+.tasks__sort-button {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  border: 1px solid #D7D7D7;
+  border-radius: 10px;
+}
+
+.tasks__sort-title {
+  margin-left: 10px;
+  font-family: Circe;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: $bluedark-main;
+}
+
+.tasks__sort-arrow {
+  margin-left: auto;
+  //transform: rotate(90deg);
+}
+

@@ -1,0 +1,61 @@
+@import "src/assets/scss/variables";
+
+.groups__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 18px;
+  box-sizing: border-box;
+  padding: 12px 0;
+  box-shadow: 0 4px 3px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  background-color: white;
+}
+
+.groups__folder-icon {
+  margin: 0 40px;
+}
+
+.groups__line {
+  width: 1px;
+  height: 24px;
+  background-color: $lightgray-main;
+}
+
+.groups__item-title {
+  margin-left: 20px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+  color: $bluedark-main;
+}
+
+.groups__actions {
+  margin-left: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.groups__edit-button {
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.groups__show-tasks-button {
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(0, 8, 80, 0.5);
+  cursor: pointer;
+}
+
+.groups__show-tasks-arrow {
+  box-sizing: border-box;
+  padding: 0 20px;
+  cursor: pointer;
+}

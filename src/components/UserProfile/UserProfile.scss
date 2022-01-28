@@ -1,0 +1,42 @@
+@import "src/assets/scss/variables";
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  margin: auto 0 0 0;
+}
+
+.user-profile__avatar-wrapper {
+  position: relative;
+  margin-right: 12px;
+  overflow: visible;
+}
+
+.user-profile__avatar-wrapper::after {
+  position: absolute;
+  content: "";
+  top: -4px;
+  right: 2px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: $red-main;
+  border: 2px solid white;
+  z-index: 10;
+}
+
+.user-profile__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-profile__name {
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 120%;
+  color: $bluedark-main;
+}
