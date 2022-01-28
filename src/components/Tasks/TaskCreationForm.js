@@ -77,7 +77,7 @@ function TaskCreationForm(props) {
     ]
 
 
-    const { register, handleSubmit, watch, errors, formState } = useForm({ mode: "onChange" });
+    const { register, handleSubmit, formState } = useForm({ mode: "onChange" });
 
     const [taskData, setTaskData] = React.useState({
         category: 'sport',
@@ -105,7 +105,7 @@ function TaskCreationForm(props) {
             <DateAndTimePicker />
             <FormInput
                 ref={register({ required: true })}
-                name="deadline"
+                name="tags"
                 type="text"
                 label="Add Tags"
                 placeholder=""
