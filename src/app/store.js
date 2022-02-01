@@ -1,8 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import {configureStore} from '@reduxjs/toolkit';
+import userReducer from '../features/userSlice'
+import categoriesReducer from '../features/categoriesSlice';
+import tagsReducer from '../features/tagsSlice'
+import groupsReducer from '../features/groupsSlice'
+import tasksReducer from '../features/tasksSlice'
 
 export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
+    reducer: {
+        user: userReducer,
+        categories: categoriesReducer,
+        tags: tagsReducer,
+        groups: groupsReducer,
+        tasks: tasksReducer
+    },
 });

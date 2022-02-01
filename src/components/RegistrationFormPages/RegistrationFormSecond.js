@@ -23,45 +23,6 @@ function RegistrationFormSecond(props) {
         <div className="registration">
             <RegistrationDots pageNumber="2"/>
             <StartModalTitle title="Almost done"/>
-            {/*<form onSubmit={handleSubmit(onSubmit)} className="registration">*/}
-            {/*    <FormControl className="form-control">*/}
-            {/*        <Controller*/}
-            {/*            name="password"*/}
-            {/*            type="password"*/}
-            {/*            control={control}*/}
-            {/*            defaultValue=""*/}
-            {/*            label="Password"*/}
-            {/*            rules={{ required: true, minLength: 8,}}*/}
-            {/*            as={TextField}*/}
-            {/*            sx={{*/}
-            {/*                mt: '30px',*/}
-            {/*                mb: '24px'*/}
-            {/*            }}*/}
-            {/*        />*/}
-            {/*    </FormControl>*/}
-            {/*    <FormControl className="form-control">*/}
-            {/*        <Controller*/}
-            {/*            name="confirmPassword"*/}
-            {/*            type="password"*/}
-            {/*            control={control}*/}
-            {/*            defaultValue=""*/}
-            {/*            label="Confirm Password"*/}
-            {/*            rules={{ required: true, validate: value => value === password.current }}*/}
-            {/*            as={TextField}*/}
-            {/*        />*/}
-            {/*    </FormControl>*/}
-            {/*    <FormControl*/}
-            {/*        sx={{*/}
-            {/*            display: 'flex',*/}
-            {/*            flexDirection: 'row',*/}
-            {/*            mt: '30px',*/}
-            {/*            mb: '24px'*/}
-            {/*        }}*/}
-            {/*    >*/}
-            {/*        <RegistrationFormBackButton handlePrevPage={props.handlePrevPage}/>*/}
-            {/*        <StartModalButton type="submit" disabled={!formState.isValid}/>*/}
-            {/*    </FormControl>*/}
-            {/*</form>*/}
             <form onSubmit={handleSubmit(onSubmit)} className="registration__container">
                 <FormInput
                     ref={register({ required: true, minLength: 8, pattern: /[A-Z]{2}/ })}

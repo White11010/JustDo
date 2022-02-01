@@ -1,0 +1,88 @@
+@import "src/assets/scss/variables";
+
+.tasks__item {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 14px 16px;
+}
+
+.tasks__circle-icon {
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 1px solid #6F7D97;
+}
+
+.tasks__title {
+  width: 268px;
+  margin-left: 12px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+  color: $bluedark-main;
+}
+
+.tasks__line {
+  width: 1px;
+  height: 24px;
+  margin: 0 24px;
+  background-color: $lightgray-main;
+}
+
+.tasks__deadline-container {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 4px 11px;
+}
+
+.tasks__deadline {
+  margin-left: 10px;
+  ont-family: Circe;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  color: $headline-gray;
+}
+
+.tasks__category {
+  display: flex;
+  align-items: center;
+  margin-left: 24px;
+}
+
+.tasks__category-name {
+  margin-left: 6px;
+  font-family: Circe;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: $headline-gray;
+}
+
+.tasks__tags-list {
+  display: flex;
+  align-items: center;
+  font-family: Circe;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: $medium-gray;
+}
+
+.tasks__tags-item {
+  margin-left: 8px;
+}
+
+.tasks__priority-icon {
+  margin-left: auto;
+}

@@ -1,0 +1,15 @@
+@import "src/assets/scss/variables";
+
+.dashboard__logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.dashboard__logo-title {
+  margin-left: 24px;
+  font-family: 'Circe';
+  font-size: 24px;
+  line-height: 32px;
+  color: $blue-main;
+}
