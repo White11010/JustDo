@@ -29,7 +29,7 @@ function FormSelectInput(props) {
     const selectOption = (event) => {
         handlePlaceholder(event.target.textContent);
         handleIcon(event.target.firstChild.getAttribute("src"));
-        // props.handleTaskData({[props.key]: event.target.textContent})
+        props.handleTaskData({[props.keyWord]: event.target.textContent});
         handleClose();
     }
 

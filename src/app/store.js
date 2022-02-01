@@ -3,12 +3,14 @@ import userReducer from '../features/userSlice'
 import categoriesReducer from '../features/categoriesSlice';
 import tagsReducer from '../features/tagsSlice'
 import groupsReducer from '../features/groupsSlice'
+import tasksReducer from '../features/tasksSlice'
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
         categories: categoriesReducer,
         tags: tagsReducer,
-        groups: groupsReducer
+        groups: groupsReducer,
+        tasks: tasksReducer
     },
 });

@@ -5,24 +5,7 @@ import workIcon from '../assets/images/categories-icons/bx-color-work.svg'
 import sportIcon from '../assets/images/categories-icons/bx-color-workout.svg'
 
 const initialState = {
-    categories: [
-        {
-            name: 'Home',
-            iconPath: homeIcon,
-        },
-        {
-            name: 'Meetings',
-            iconPath: meetingsIcon
-        },
-        {
-            name: 'Work',
-            iconPath: workIcon
-        },
-        {
-            name: 'Sport',
-            iconPath: sportIcon
-        },
-    ]
+    categories: []
 };
 
 const categoriesSlice = createSlice({
@@ -30,7 +13,7 @@ const categoriesSlice = createSlice({
     initialState,
     reducers: {
         setCategories: (state, action) => {
-            state.categories.push(action.payload);
+            state.categories = action.payload;
         }
     },
 });

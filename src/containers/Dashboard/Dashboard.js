@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch} from "react-redux";
+import {setCategories} from "../../features/categoriesSlice";
 import {useSelector} from "react-redux";
 import {selectCategories} from "../../features/categoriesSlice";
 import {selectTags} from "../../features/tagsSlice";
@@ -11,16 +13,17 @@ import DashboardSidebarLine from "../../components/Dashboard/DashboardSidebarLin
 import Groups from "../Groups/Groups";
 import Tasks from "../Tasks/Tasks";
 
+
 function Dashboard(props) {
 
-    const categories = useSelector(selectCategories);
+
     const tags = useSelector(selectTags);
 
     return (
         <div className="dashboard">
             <div className="dashboard__sidebar--left">
                 <DashboardLogo/>
-                <CategoriesList categories={categories}/>
+                <CategoriesList/>
                 <DashboardSidebarLine/>
                 <TagsList tags={tags}/>
                 <UserProfile/>

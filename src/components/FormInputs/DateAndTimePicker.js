@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     }
 })
 
-export default function DateAndTimePicker() {
+export default function DateAndTimePicker(props) {
     const classes = useStyles();
 
     const [value, setValue] = React.useState(new Date());
@@ -25,7 +25,7 @@ export default function DateAndTimePicker() {
 
     const handleChange = (newValue) => {
         setValue(newValue);
-        logDate();
+        props.handleTaskData({[props.keyWord]: value.toISOString()})
     };
 
     return (
