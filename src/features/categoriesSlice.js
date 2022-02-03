@@ -1,11 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import homeIcon from '../assets/images/categories-icons/bx-color-house.svg'
-import meetingsIcon from '../assets/images/categories-icons/bx-color-meeting.svg'
-import workIcon from '../assets/images/categories-icons/bx-color-work.svg'
-import sportIcon from '../assets/images/categories-icons/bx-color-workout.svg'
 
 const initialState = {
-    categories: []
+    categories: null
 };
 
 const categoriesSlice = createSlice({
@@ -14,11 +10,23 @@ const categoriesSlice = createSlice({
     reducers: {
         setCategories: (state, action) => {
             state.categories = action.payload;
-        }
+        },
+        addCategory: (state, action) => {
+            state.categories.push(action.payload)
+        },
+        updateCategory: (state, action) => {
+            const categoryIndex = state.categories.findIndex(category => {return category.id === action.payload.id})
+            state.tasks[categoryIndex] = action.payload;
+        },
+        deleteCategory: (state, action) => {
+            state.categories.splice(state.categories.findIndex(category => {
+                return category.id === action.payload
+            }), 1);
+        },
     },
 });
 
-export const { setCategories } = categoriesSlice.actions;
+export const { setCategories, addCategory, updateCategory, deleteCategory } = categoriesSlice.actions;
 
 export const selectCategories = (state) => state.categories.categories;
 

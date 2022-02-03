@@ -20,44 +20,6 @@ function RegistrationFormThird(props) {
         <div className="registration">
             <RegistrationDots pageNumber="3"/>
             <StartModalTitle title="One last step"/>
-            {/*<form onSubmit={handleSubmit(onSubmit)} className="registration-form__container">*/}
-            {/*    <FormControl className="form-control">*/}
-            {/*        <Controller*/}
-            {/*            name="firstName"*/}
-            {/*            control={control}*/}
-            {/*            defaultValue=""*/}
-            {/*            label="First Name"*/}
-            {/*            rules={{ required: true }}*/}
-            {/*            as={TextField}*/}
-            {/*            sx={{*/}
-            {/*                mt: '30px',*/}
-            {/*                mb: '24px'*/}
-            {/*            }}*/}
-            {/*        />*/}
-            {/*    </FormControl>*/}
-            {/*    <FormControl className="form-control">*/}
-            {/*        <Controller*/}
-            {/*            name="lastName"*/}
-            {/*            control={control}*/}
-            {/*            defaultValue=""*/}
-            {/*            label="Last Name"*/}
-            {/*            rules={{ required: true }}*/}
-            {/*            as={TextField}*/}
-            {/*        />*/}
-            {/*    </FormControl>*/}
-            {/*    <FileUploader  handleAddImage={props.handleAddImage}/>*/}
-            {/*    <FormControl*/}
-            {/*        sx={{*/}
-            {/*            display: 'flex',*/}
-            {/*            flexDirection: 'row',*/}
-            {/*            mt: '30px',*/}
-            {/*            mb: '24px'*/}
-            {/*        }}*/}
-            {/*    >*/}
-            {/*        <RegistrationFormBackButton handlePrevPage={props.handlePrevPage}/>*/}
-            {/*        <StartModalButton type="submit" disabled={!formState.isValid}/>*/}
-            {/*    </FormControl>*/}
-            {/*</form>*/}
             <form onSubmit={handleSubmit(onSubmit)} className="registration__container">
                 <FormInput
                     ref={register({ required: true })}

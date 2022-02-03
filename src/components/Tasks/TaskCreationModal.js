@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import './TasksCreationModal.scss'
 import TaskCreationForm from "./TaskCreationForm";
+import TaskEditingForm from "./TaskEditingForm";
 
 const style = {
     display: 'flex',
@@ -34,8 +35,18 @@ function TaskCreationModal(props) {
                 }}
             >
                 <Box sx={style}>
-                    <h3 className="task-modal__title">Task Creation</h3>
-                    <TaskCreationForm/>
+                    <h3 className="task-modal__title">
+                        {
+                            props.isCreation ?
+                            'Task Creation' :
+                            'Edit task'
+                        }
+                    </h3>
+                    {
+                        props.isCreation ?
+                            <TaskCreationForm handleCose={props.handleClose}/> :
+                            <TaskEditingForm handleCose={props.handleClose}/>
+                    }
                 </Box>
             </Modal>
         </div>

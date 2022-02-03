@@ -57,7 +57,7 @@ function Tasks() {
                 <button className="button button--primary tasks__add-button" onClick={handleOpen}>Create task</button>
             </div>
             <TasksList tasks={tasks}/>
-            <TaskCreationModal open={open} handleClose={handleClose}/>
+            <TaskCreationModal open={open} handleClose={handleClose} isCreation={true}/>
         </div>
     );
 }

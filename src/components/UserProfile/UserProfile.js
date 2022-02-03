@@ -37,7 +37,6 @@ function UserProfile(props) {
             if (token) {
                 getUserData(token)
                     .then(response => {
-                        console.log(response)
                         dispatch(setUserData(response.data));
                     })
                     .catch(error => {

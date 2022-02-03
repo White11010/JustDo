@@ -2,7 +2,7 @@
   height: 100vh;
   display: grid;
   grid-template-areas: "left-sidebar tasks right-sidebar";
-  grid-template-columns: 280px 1fr 284px;
+  //grid-template-columns: 280px 1fr 284px;
 }
 
 .dashboard__sidebar--left {
@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding: 44px 22px;
+  padding: 40px 22px;
 }
 
 .dashboard__tasks {

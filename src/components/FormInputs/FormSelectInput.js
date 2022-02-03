@@ -1,6 +1,29 @@
 import React, {forwardRef, useRef, useEffect} from 'react';
 import arrowIcon from '../../assets/images/bx-chevron-down-big.svg';
 import './FormSelectInput.scss';
+import neutralPriorityIcon from "../../assets/images/gray-circle.svg";
+import importantPriorityIcon from "../../assets/images/red-circle.svg";
+import middlePriorityIcon from "../../assets/images/blue-circle.svg";
+import lowPriorityIcon from "../../assets/images/yellow-circle.svg";
+import homeIcon from "../../assets/images/categories-icons/bx-color-house.svg";
+import sportIcon from "../../assets/images/categories-icons/bx-color-workout.svg";
+import workIcon from "../../assets/images/categories-icons/bx-color-work.svg";
+import meetingsIcon from "../../assets/images/categories-icons/bx-color-meeting.svg";
+
+const prioritiesIconsMap = {
+    neutral: neutralPriorityIcon,
+    Important: importantPriorityIcon,
+    Middle: middlePriorityIcon,
+    Low: lowPriorityIcon
+}
+
+const categoriesIconsMap = {
+    home: homeIcon,
+    sport: sportIcon,
+    work: workIcon,
+    meetings: meetingsIcon
+}
+
 
 function FormSelectInput(props) {
     const [open, setOpen] = React.useState(false)

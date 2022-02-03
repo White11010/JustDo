@@ -1,0 +1,139 @@
+@import "src/assets/scss/variables";
+
+.active-task {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.active-task__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.active-task__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+
+}
+
+.active-task__title {
+  margin-left: 10px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 24px;
+  color: $bluedark-main;
+}
+
+.active-task__subtitle {
+  margin-bottom: 18px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 120%;
+  color: $bluedark-main;
+}
+
+.active-task__info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+  box-sizing: border-box;
+  padding: 24px;
+  border-radius: 10px;
+  border: 1px solid $lightgray-main;
+}
+
+.active-task__info-container {
+  margin-bottom: 24px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.active-task__info-title {
+  margin-bottom: 4px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: $bluedark-main;
+}
+
+.active-task__notification-container {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 4px 6px;
+  background: #F2F2F2;
+  border-radius: 10px;
+}
+
+.active-task__info-data-container {
+  display: flex;
+  align-items: center;
+}
+
+.active-task__info-data {
+  margin-left: 10px;
+  font-family: Circe;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: $headline-gray;
+}
+
+
+.active-task__info-hashtag-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  font-family: Circe;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: $headline-gray;
+}
+
+.active-task__info-hashtag {
+  margin-left: 10px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.active-task__actions {
+  width: 100%;
+  justify-self: flex-end;
+  display: flex;
+  justify-content: space-between;
+  font-family: Circe;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.active-task__cancel-button {
+  width: 120px;
+  box-sizing: border-box;
+  padding: 8px 0;
+}
+
+.active-task__edit-button {
+  width: 110px;
+  box-sizing: border-box;
+  padding: 8px 0;
+}
+

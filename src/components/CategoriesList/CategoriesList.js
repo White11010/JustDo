@@ -1,50 +1,93 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
+import './CategoriesList.scss';
+import {useForm} from "react-hook-form";
 import plusIcon from '../../assets/images/plus-icons/bx-plus-gray.svg'
 import sportIcon from "../../assets/images/categories-icons/bx-color-workout.svg";
 import homeIcon from "../../assets/images/categories-icons/bx-color-house.svg";
 import workIcon from "../../assets/images/categories-icons/bx-color-work.svg";
 import meetingsIcon from "../../assets/images/categories-icons/bx-color-meeting.svg";
-import './CategoriesList.scss';
+import imagePlaceholderIcon from "../../assets/images/bxs-image-alt.svg"
+import editIcon from "../../assets/images/bx-edit-alt.svg"
+import trashIcon from "../../assets/images/bx-trash.svg"
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
-import {selectCategories, setCategories} from "../../features/categoriesSlice";
+import {addCategory, selectCategories, setCategories, updateCategory} from "../../features/categoriesSlice";
+import {deleteCategory} from "../../features/categoriesSlice";
 
-const categoriesIconsMap = new Map([
-    ['home', homeIcon],
-    ['sport', sportIcon],
-    ['work', workIcon],
-    ['meetings', meetingsIcon]
-])
+const categoriesIconsMap = {
+    home: homeIcon,
+    sport: sportIcon,
+    work: workIcon,
+    meetings: meetingsIcon
+}
 
-const defaultCategories = [
-    {
-        name: 'Home',
-        icon: 'home'
-    },
-    {
-        name: 'Meetings',
-        icon: 'meetings'
-    },
-    {
-        name: 'Work',
-        icon: 'work'
-    },
-    {
-        name: 'Sport',
-        icon: 'sport'
-    },
-]
 
-function CategoriesList(props) {
+function CategoriesList() {
+    const {register, handleSubmit, watch, errors, formState} = useForm({mode: "onChange"});
 
-    const dispatch = useDispatch();
+    const [activeCategory, setActiveCategory] = React.useState('All');
 
-    const sendDefaultCategories = (token, category) => {
+    const input = useRef(null)
+
+    const [open, setOpen] = React.useState(false)
+    const handleOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false)
+
+    const [openIcons, setOpenIcons] = React.useState(false)
+    const handleIconsOpen = () => setOpenIcons(true)
+    const handleIconsClose = () => setOpenIcons(false)
+
+    const [categoryName, setCategoryName] = React.useState('')
+    const handleCategoryName = (name) => setCategoryName(name);
+
+    const [categoryIcon, setCategoryIcon] = React.useState(null)
+    const handleCategoryIcon = (icon) => setCategoryIcon(icon);
+
+    const [categoriesHovered, setCategoriesHovered] = React.useState({})
+    const handleSetCategoriesHovered = (category) => setCategoriesHovered(Object.assign(categoriesHovered, category))
+    const handleCategoryHovered = (event) => {
+        if (!categoriesUpdating[event.target.closest(".categories__item").attributes.id.value]) {
+            setCategoriesHovered({...categoriesHovered, ...{[event.target.closest(".categories__item").attributes.id.value]: true}});
+        }
+    }
+    const handleCategoryLeaved = (event) => {
+        if (event.relatedTarget.attributes.id === undefined || event.target.attributes.id.value !== event.relatedTarget.attributes.id.value) {
+            setCategoriesHovered({...categoriesHovered, ...{[event.target.closest(".categories__item").attributes.id.value]: false}});
+        }
+    }
+
+    const [categoriesUpdating, setCategoriesUpdating] = React.useState({})
+    const handleSetCategoriesUpdating = (category) => setCategoriesUpdating(Object.assign(categoriesUpdating, category))
+    const handleCategoryUpdating = (event) => {
+        setCategoriesUpdating({...categoriesUpdating, ...{[event.target.closest(".categories__item").attributes.id.value]: true}});
+    }
+    const handleCategoryUpdated = (event) => {
+        setCategoriesUpdating({...categoriesUpdating, ...{[event.target.closest(".categories__item").attributes.id.value]: false}});
+    }
+
+
+
+    const handleAddCategory = () => {
+        handleOpen();
+    }
+
+    const selectIcon = (event) => {
+        handleCategoryIcon(event.target.attributes.category.value);
+        handleIconsClose()
+        input.current.focus();
+    }
+
+    const sendCategoryData = () => {
+        const token = localStorage.getItem('authorization');
+
         return axios({
             method: "post",
             url: "http://34.125.5.252:3000/api/categories",
-            data: category,
-            headers: {'authorization': 'Bearer ' + token}
+            headers: {'authorization': 'Bearer ' + token},
+            data: {
+                name: categoryName,
+                icon: categoryIcon
+            }
         })
             .then(response => {
                 return response;
@@ -53,6 +96,100 @@ function CategoriesList(props) {
                 throw error;
             })
     }
+
+    const onSubmit = (event) => {
+        if (event.code === 'Enter' || event.type === 'blur' && (!event.relatedTarget || event.relatedTarget.attributes.id.value !== 'select=category-icon')) {
+            handleClose()
+            if (categoryName !== '') {
+                sendCategoryData()
+                    .then(response => {
+                        if (response.status === 201) {
+                            dispatch(addCategory(response.data.data))
+                            handleCategoryName('')
+                            handleCategoryIcon(null)
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            }
+        }
+    }
+
+    const handleOpenUpdateInput = (event) => {
+        handleCategoryUpdating(event);
+        handleCategoryLeaved(event)
+    }
+
+    const onUpdateSubmit = (event) => {
+        if (event.code === 'Enter' || event.type === 'blur') {
+            if (event.target.value !== '') {
+                sendUpdatedCategory({name: event.target.value, id: event.target.closest(".categories__item").attributes.id.value})
+                    .then(response => {
+                        if (response.status === 200) {
+                            dispatch(updateCategory(response.data.data))
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            }
+        }
+    }
+
+
+    const sendUpdatedCategory = (data) => {
+        const token = localStorage.getItem('authorization');
+
+        return axios({
+            method: "put",
+            url: "http://34.125.5.252:3000/api/categories",
+            headers: {'authorization': 'Bearer ' + token},
+            data: {
+                data
+            }
+        })
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                throw error;
+            })
+    }
+
+    const handleDeleteCategory = (event) => {
+        sendDeleteCategory(event.target.attributes.id.value)
+            .then(response => {
+                if (response.status === 200) {
+                    dispatch(deleteCategory(event.target.attributes.id.value))
+                }
+            })
+    }
+
+    const sendDeleteCategory = (id) => {
+        const token = localStorage.getItem('authorization');
+
+        return axios({
+            method: "delete",
+            url: "http://34.125.5.252:3000/api/categories",
+            headers: {'authorization': 'Bearer ' + token},
+            data: {
+                id: id
+            }
+        })
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                throw error;
+            })
+    }
+
+    useEffect(() => {
+        open && input.current.focus();
+    }, [open])
+
+    const dispatch = useDispatch();
 
     const getCategoriesFromApi = (token) => {
         return axios({
@@ -68,22 +205,13 @@ function CategoriesList(props) {
             })
     }
 
+    const categories = useSelector(selectCategories) || null;
+
     useEffect(() => {
         const token = localStorage.getItem('authorization');
 
         getCategoriesFromApi(token)
             .then(response => {
-                if (response.data.length === 0) {
-                    defaultCategories.forEach(category => {
-                        sendDefaultCategories(token, category)
-                            .then(response => {
-                                console.log(response)
-                            })
-                            .catch(error => {
-                                console.log(error)
-                            })
-                    })
-                }
                 dispatch(setCategories(response.data))
             })
             .catch(error => {
@@ -91,29 +219,105 @@ function CategoriesList(props) {
             })
     }, [])
 
-    const categories = useSelector(selectCategories);
+    useEffect(() => {
+        if (categories !== null)
+        categories.forEach(category => {
+            handleSetCategoriesHovered({[category.id]: false})
+            handleSetCategoriesUpdating({[category.id]: false})
+        })
+    }, [categories])
+
 
 
     return (
         <div className="categories">
             <div className="categories__header">
                 <h3 className="categories__title">CATEGORY</h3>
-                <img src={plusIcon} alt="add category" className="categories__add-button"/>
+                <img src={plusIcon} alt="add category" className="categories__add-button" onClick={handleAddCategory}/>
             </div>
             <ul className="categories__list">
-                <li className="categories__item categories__select-all-button categories__item--active">All</li>
+                <li className="categories__item categories__select-all-button categories__item--active" >All</li>
                 {
                     categories !== null && categories.map(item => {
                         return (
                             <li
                                 key={item.name}
+                                id={item.id}
                                 className="categories__item"
+                                onMouseOver={handleCategoryHovered}
+                                onMouseOut={handleCategoryLeaved}
                             >
-                                <img src={categoriesIconsMap.get(item.icon)} alt="home"/>
-                                <p className="categories__item-title">{item.name}</p>
+                                {
+                                    item.icon !== null &&
+                                    <img src={categoriesIconsMap[item.icon]} alt={categoriesIconsMap[item.icon]} className="categories__icon" id={item.id}/>
+                                }
+                                {
+                                    categoriesUpdating[item.id] ?
+                                        <input
+                                            className="categories__item-title"
+                                            type="text"
+                                            defaultValue={item.name}
+                                            onKeyPress={onUpdateSubmit}
+                                            onBlur={onUpdateSubmit}
+                                            id={item.id}
+                                        /> :
+                                        <p className="categories__item-title" id={item.id}>{item.name}</p>
+                                }
+                                {
+                                    categoriesHovered[item.id] &&
+                                    <div className="categories__item-actions" id={item.id}>
+                                        <img src={editIcon} alt="edit category" onClick={handleOpenUpdateInput} id={item.id}/>
+                                        <img src={trashIcon} alt="delete category" onClick={handleDeleteCategory} id={item.id}/>
+                                    </div>
+                                }
                             </li>
                         )
                     })
+                }
+                {
+                    open &&
+                    <li
+                        className="categories__item categories__input"
+                    >
+                        <img
+                            tabIndex="0"
+                            id="select=category-icon"
+                            src={categoryIcon === null ? imagePlaceholderIcon : categoriesIconsMap[categoryIcon]}
+                            alt="category image"
+                            onClick={handleIconsOpen}
+                            className="categories__icon"
+                        />
+                        <input
+                            ref={input}
+                            type="text"
+                            className="categories__item-title"
+                            onChange={event => handleCategoryName(event.target.value)}
+                            onKeyPress={onSubmit}
+                            onBlur={onSubmit}
+                        />
+                        {
+                            openIcons && <ul className="categories__icons-list">
+                                {
+                                    Object.keys(categoriesIconsMap).map(category => {
+                                        return (
+                                            <li
+                                                key={category}
+                                                className="categories__icons-list-item"
+                                            >
+                                                <img
+                                                    src={categoriesIconsMap[category]}
+                                                    alt={categoriesIconsMap[category]}
+                                                    category={category}
+                                                    onClick={selectIcon}
+                                                    className="categories__icon"
+                                                />
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        }
+                    </li>
                 }
             </ul>
         </div>
