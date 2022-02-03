@@ -68,3 +68,14 @@ code {
   background-color: $blue-main;
 }
 
+.button--cancel {
+  color: $red-main;
+  background-color: white;
+  border: 1px solid $red-main;
+}
+
+.button--cancel:hover {
+  color: white;
+  background-color: $red-main;
+}
+

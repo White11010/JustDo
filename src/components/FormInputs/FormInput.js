@@ -2,7 +2,7 @@ import React, {forwardRef} from 'react';
 import './FormInput.scss';
 
 const FormInput = React.forwardRef(
-    ({name, type, label, placeholder, style, isError, errorText, ...restProps}, forwardRef) => {
+    ({name, type, label, placeholder, style, isError, errorText, value, ...restProps}, forwardRef) => {
         return (
             <p className="form__input-container" style={style}>
                 <label
@@ -18,6 +18,7 @@ const FormInput = React.forwardRef(
                     placeholder={placeholder}
                     ref={forwardRef}
                     className="form__input"
+                    defaultValue={value}
                 />
                 {
                     isError && <span

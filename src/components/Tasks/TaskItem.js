@@ -41,6 +41,10 @@ function TaskItem(props) {
 
     const categories = useSelector(selectCategories);
 
+    const handleSelectTask = () => {
+        props.selectTask(props.id)
+    }
+
     useEffect(() => {
         categories.forEach((category) => {
             if (category.id === props.categoryId) {
@@ -51,9 +55,12 @@ function TaskItem(props) {
     }, [])
 
     return (
-        <li className="tasks__item">
+        <li
+            className="tasks__item"
+            onClick={handleSelectTask}
+        >
             <div className="tasks__circle-icon"/>
-            <p className="tasks__title">{props.name}</p>
+            <p className="tasks-item__title">{props.name}</p>
             <div className="tasks__line"/>
             <div className="tasks__deadline-container">
                 <img src={props.priority === 'Important' ? bellRedIcon : bellGreyIcon} alt="bell icon"/>

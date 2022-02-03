@@ -3,8 +3,10 @@
 .tasks__item {
   display: flex;
   align-items: center;
+  margin-bottom: 18px;
   box-sizing: border-box;
   padding: 14px 16px;
+  cursor: pointer;
 }
 
 .tasks__circle-icon {
@@ -15,7 +17,7 @@
   border: 1px solid #6F7D97;
 }
 
-.tasks__title {
+.tasks-item__title {
   width: 268px;
   margin-left: 12px;
   font-family: 'Circe';
@@ -38,6 +40,8 @@
   align-items: center;
   box-sizing: border-box;
   padding: 4px 11px;
+  background: #F2F2F2;
+  border-radius: 8px;
 }
 
 .tasks__deadline {
