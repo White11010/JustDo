@@ -1,8 +1,5 @@
-import React, {useEffect} from 'react';
-import {useDispatch} from "react-redux";
-import {setCategories} from "../../features/categoriesSlice";
+import React from 'react';
 import {useSelector} from "react-redux";
-import {selectCategories} from "../../features/categoriesSlice";
 import {selectActiveTask} from "../../features/tasksSlice";
 import {selectTags} from "../../features/tagsSlice";
 import UserProfile from "../../components/UserProfile/UserProfile";

@@ -84,7 +84,6 @@ function TaskEditingForm(props) {
                 style={{flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginRight: '12px'}}
             />
             <TaskCategorySelect
-
                 keyWord="categoryId"
                 handleTaskData={handleTaskData}
                 categoryId={activeTask.categoryId}

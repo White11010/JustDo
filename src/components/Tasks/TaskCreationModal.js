@@ -20,6 +20,7 @@ const style = {
     bgcolor: 'white',
     borderRadius: '20px',
     boxShadow: '0px 21px 48px rgba(0, 0, 0, 0.12)',
+    outline: 'none'
 };
 
 function TaskCreationModal(props) {
@@ -27,7 +28,6 @@ function TaskCreationModal(props) {
         <div>
             <Modal
                 open={props.open}
-                onClose={props.handleClose}
                 BackdropProps={{
                     style: {
                         backgroundColor: 'rgba(250, 250, 250, 0.89)'

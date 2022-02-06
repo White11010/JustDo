@@ -1,9 +1,11 @@
 @import "src/assets/scss/variables";
 
 .user-profile {
+  position: relative;
   display: flex;
   align-items: center;
   margin: auto 0 0 0;
+  cursor: pointer;
 }
 
 .user-profile__avatar-wrapper {

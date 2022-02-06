@@ -10,7 +10,8 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding: 40px 0 40px 24px;
+  padding: 40px 24px;
+  background-color: white;
 }
 
 .dashboard__sidebar--right {
@@ -19,6 +20,7 @@
   flex-direction: column;
   box-sizing: border-box;
   padding: 40px 22px;
+  background-color: white;
 }
 
 .dashboard__tasks {

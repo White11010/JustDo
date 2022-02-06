@@ -1,0 +1,144 @@
+@import "src/assets/scss/variables";
+
+.user-modal__account {
+  position: relative;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 60px 64px 30px 64px;
+
+  &-title {
+    margin-bottom: 30px;
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 24px;
+    color: $bluedark-main;
+  }
+
+  &-subtitle {
+    margin-bottom: 16px;
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  &-photo-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  &-photo {
+    width: 84px;
+    height: 84px;
+    margin-right: 40px;
+    border-radius: 50%;
+  }
+
+  &-photo-button {
+    padding: 8px 22px;
+    font-family: Circe;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+  }
+
+  &-photo-button--edit-button {
+    margin-right: 16px;
+  }
+
+  &-photo-info {
+    position: absolute;
+    top: calc(50% + 26px);
+    left: 124px;
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 18px;
+    color: $headline-gray;
+  }
+
+  &-main-form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &-password-title {
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: $bluedark-main;
+  }
+
+  &-password-button {
+    margin-top: 24px;
+    padding: 8px 45px;
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+  }
+
+  &-line {
+    margin: 24px 0;
+    width: 100%;
+    height: 1px;
+    background-color: $lightgray-main;
+  }
+
+  &-delete-title {
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  &-actions {
+    position: absolute;
+    bottom: 30px;
+    right: 64px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &-cancel-button {
+    margin-right: 16px;
+  }
+
+  &-cancel-button, &-update-button {
+    font-family: Circe;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 27px;
+    display: flex;
+    align-items: center;
+    padding: 8px 22px;
+  }
+}
+
+
+.user-modal__close-icon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  cursor: pointer;
+}

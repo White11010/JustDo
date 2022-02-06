@@ -1,0 +1,56 @@
+@import "src/assets/scss/variables";
+
+.user-modal {
+
+  &__settings {
+    height: 100%;
+    width: 200px  ;
+    box-sizing: border-box;
+    padding: 0 28px;
+  }
+
+  &__settings-title {
+    margin-top: 60px;
+    margin-left: 3px;
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: $bluedark-main;
+  }
+
+  &__settings-list {
+    margin-top: 22px;
+  }
+
+  &__settings-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__settings-item-icon {
+    margin-right: 10px;
+  }
+
+  &__settings-item-title {
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(0, 8, 80, 0.75)
+  }
+
+  &__settings-item--active::before {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    top: 0;
+    left: -28px;
+    background-color: $blue-main;
+    cursor: auto;
+  }
+}

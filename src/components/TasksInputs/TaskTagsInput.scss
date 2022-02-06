@@ -1,0 +1,69 @@
+@import "../../assets/scss/variables";
+
+.tags-input {
+  max-width: 399px;
+  display: flex;
+  height: 52px;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  margin: 0;
+  border: 1px solid #D7D7D7;
+  box-sizing: border-box;
+  padding: 15px 20px;
+  border-radius: 10px;
+
+
+  &__add-button {
+    margin-left: auto;
+    cursor: pointer;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 20px;
+    overflow-x: hidden;
+  }
+
+  &__tag {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 120%;
+    color: $bluedark-main;
+  }
+
+  &__delete-icon {
+    cursor: pointer;
+  }
+
+  &__input {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 120%;
+    color: $bluedark-main;
+  }
+}

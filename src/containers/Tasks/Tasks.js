@@ -6,22 +6,42 @@ import TaskCreationModal from "../../components/Tasks/TaskCreationModal";
 import TasksList from "../../components/Tasks/TasksList";
 import axios from "axios";
 import {useDispatch} from "react-redux";
-import {setTasks} from "../../features/tasksSlice";
+import { setTasks} from "../../features/tasksSlice";
 import {useSelector} from "react-redux";
 import {selectTasks} from "../../features/tasksSlice";
+import {setTags} from "../../features/tagsSlice";
 
 
 function Tasks() {
 
     const dispatch = useDispatch();
 
-    const tasks = useSelector(selectTasks);
+    const tasks = useSelector(selectTasks)
+
+    //Setting all unique tags from all tasks in redux state
+    useEffect(() => {
+        if (tasks.length !== 0) {
+            const tags = [];
+            tasks.forEach(task => {
+                if (task.tags !== null) {
+                    if (tags.length === 0) {
+                        tags.push(...task.tags.split(' '))
+                    } else {
+                        tags.push(...task.tags.split(' ').filter(tag => {
+                            return !tags.includes(tag)
+                        }))
+                    }
+                }
+            })
+            dispatch(setTags(tags))
+        }
+    }, [tasks])
+
 
     useEffect(() => {
         const token = localStorage.getItem('authorization');
         getTasksFromApi(token)
             .then(response => {
-                console.log(response)
                 dispatch(setTasks(response.data))
             })
             .catch(error => {
@@ -56,7 +76,10 @@ function Tasks() {
                 <TasksFilters/>
                 <button className="button button--primary tasks__add-button" onClick={handleOpen}>Create task</button>
             </div>
-            <TasksList tasks={tasks}/>
+            {
+                tasks.length !== 0 &&
+                <TasksList tasks={tasks}/>
+            }
             <TaskCreationModal open={open} handleClose={handleClose} isCreation={true}/>
         </div>
     );

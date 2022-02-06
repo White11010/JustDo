@@ -22,7 +22,7 @@ import axios from "axios";
 import TaskCreationModal from "../Tasks/TaskCreationModal";
 
 const prioritiesIconsMap = {
-    neutral: neutralPriorityIcon,
+    Neutral: neutralPriorityIcon,
     Important: importantPriorityIcon,
     Middle: middlePriorityIcon,
     Low: lowPriorityIcon
@@ -174,7 +174,7 @@ function ActiveTask(props) {
                             <div className="active-task__tags-container">
                                 <ul className="active-task__info-hashtag-list">
                                     {
-                                        props.tags.split(' ').map(tag => {
+                                        props.tags !== null && props.tags.split(' ').map(tag => {
                                             return (
                                                 <li
                                                     className="active-task__info-hashtag"

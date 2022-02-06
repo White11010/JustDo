@@ -7,9 +7,12 @@ import {useNavigate} from "react-router";
 import axios from "axios";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import {useDispatch} from "react-redux";
+import {setAuth} from "./features/userSlice";
 
 function App() {
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const getUserData = (token) => {
         return axios({
@@ -30,7 +33,8 @@ function App() {
         if (token) {
             getUserData(token)
                 .then(response => {
-                    if (response.status == 200) {
+                    if (response.status === 200) {
+                        dispatch(setAuth(true))
                         navigate('/dashboard')
                     }
                 })

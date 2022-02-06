@@ -11,8 +11,15 @@ import editIcon from "../../assets/images/bx-edit-alt.svg"
 import trashIcon from "../../assets/images/bx-trash.svg"
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
-import {addCategory, selectCategories, setCategories, updateCategory} from "../../features/categoriesSlice";
+import {
+    addCategory,
+    selectActiveCategory,
+    selectCategories, setActiveCategory,
+    setCategories,
+    updateCategory
+} from "../../features/categoriesSlice";
 import {deleteCategory} from "../../features/categoriesSlice";
+import {setFilteredTasks} from "../../features/tasksSlice";
 
 const categoriesIconsMap = {
     home: homeIcon,
@@ -25,7 +32,7 @@ const categoriesIconsMap = {
 function CategoriesList() {
     const {register, handleSubmit, watch, errors, formState} = useForm({mode: "onChange"});
 
-    const [activeCategory, setActiveCategory] = React.useState('All');
+
 
     const input = useRef(null)
 
@@ -162,6 +169,8 @@ function CategoriesList() {
             .then(response => {
                 if (response.status === 200) {
                     dispatch(deleteCategory(event.target.attributes.id.value))
+                    dispatch(setActiveCategory('All'))
+                    dispatch(setFilteredTasks({category: 'All'}))
                 }
             })
     }
@@ -227,7 +236,15 @@ function CategoriesList() {
         })
     }, [categories])
 
+    const allCategoriesNonActiveClassName = "categories__item categories__select-all-button"
+    const allCategoriesActiveClassName = "categories__item categories__select-all-button categories__item--active"
+    const nonActiveClassName = "categories__item"
+    const activeItemClassName = "categories__item categories__item--active"
 
+    const activeCategory = useSelector(selectActiveCategory);
+    const handleActiveCategory = (event) => {
+        dispatch(setActiveCategory(event.target.id))
+    }
 
     return (
         <div className="categories">
@@ -236,16 +253,17 @@ function CategoriesList() {
                 <img src={plusIcon} alt="add category" className="categories__add-button" onClick={handleAddCategory}/>
             </div>
             <ul className="categories__list">
-                <li className="categories__item categories__select-all-button categories__item--active" >All</li>
+                <li className={activeCategory === 'All' ? allCategoriesActiveClassName : allCategoriesNonActiveClassName} onClick={handleActiveCategory} id="All">All</li>
                 {
                     categories !== null && categories.map(item => {
                         return (
                             <li
                                 key={item.name}
                                 id={item.id}
-                                className="categories__item"
+                                className={activeCategory == item.id ? activeItemClassName : nonActiveClassName}
                                 onMouseOver={handleCategoryHovered}
                                 onMouseOut={handleCategoryLeaved}
+                                onClick={handleActiveCategory}
                             >
                                 {
                                     item.icon !== null &&
