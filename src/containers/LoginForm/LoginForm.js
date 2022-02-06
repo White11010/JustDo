@@ -7,7 +7,7 @@ import LoginFormLink from "../../components/LoginForm/LoginFormLink";
 import FormInput from "../../components/FormInputs/FormInput";
 import {useNavigate} from "react-router";
 import {useDispatch} from "react-redux";
-import {setUserData} from "../../features/userSlice";
+import {setAuth} from "../../features/userSlice";
 
 function LoginForm(props) {
 
@@ -34,9 +34,8 @@ function LoginForm(props) {
     const onSubmit = (data) => {
         sendLoginData(data)
             .then(response => {
-                console.log(response);
                 localStorage.setItem('authorization', response.data.token);
-                dispatch(setUserData(true));
+                dispatch(setAuth(true));
                 navigate('/dashboard');
             })
             .catch(error => console.log(error.response))

@@ -1,0 +1,53 @@
+@import "src/assets/scss/variables";
+
+.user-modal__settings {
+    height: 100%;
+    width: 200px  ;
+    box-sizing: border-box;
+    padding: 0 28px;
+
+  &-title {
+    margin-top: 60px;
+    margin-left: 3px;
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: $bluedark-main;
+  }
+
+  &-list {
+    margin-top: 22px;
+  }
+
+  &-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &-item-icon {
+    margin-right: 10px;
+  }
+
+  &-item-title {
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(0, 8, 80, 0.75)
+  }
+
+  &-item--active::before {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    top: 0;
+    left: -28px;
+    background-color: $blue-main;
+    cursor: auto;
+  }
+}

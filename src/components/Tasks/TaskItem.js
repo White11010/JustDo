@@ -22,7 +22,7 @@ const categoriesIconsMap = {
 }
 
 const prioritiesIconsMap = {
-    neutral: neutralPriorityIcon,
+    Neutral: neutralPriorityIcon,
     Important: importantPriorityIcon,
     Middle: middlePriorityIcon,
     Low: lowPriorityIcon
@@ -75,7 +75,7 @@ function TaskItem(props) {
             </div>
             <ul className="tasks__tags-list">
                 {
-                    props.tags.split(' ').map(tag => {
+                    props.tags && props.tags.split(' ').map(tag => {
                         return (
                             <li
                                 className="tasks__tags-item"
