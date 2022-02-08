@@ -1,14 +1,126 @@
-.start {
+@import "../../assets/scss/variables";
+
+.wrapper {
   max-height: 100vh;
   margin: 0 auto;
   max-width: 1070px;
-  display: flex;
   overflow: visible;
 }
 
+.start {
+  height: 823px;
+  width: calc(min(78.3vw, 1481px));
+  min-width: 1170px;
+  display: flex;
+  align-items: center;
+}
+
 .start__container {
-  margin-top: 244px;
+  margin-bottom: 18px;
+  max-width: 485px;
   display: flex;
   flex-direction: column;
   align-items: start;
+}
+
+.start__image-container {
+  max-width: 857px;
+  max-height: 789px;
+  flex: 1;
+}
+
+.start__ellipse {
+  width: 23px;
+  height: 23px;
+  margin: 0 auto 49px 218px;
+  border-radius: 50%;
+  background-color: $yellow-main;
+}
+
+.start__title {
+  min-width: 485px;
+  font-family: 'Circe';
+  font-weight: 800;
+  font-size: 74px;
+  line-height: 74px;
+}
+
+.start__title--blue {
+  color: $bluedark-main;
+}
+
+.start__title--red {
+  color: $red-main;
+}
+
+.start__illustration {
+  width: 100%;
+  margin-top: 79px;
+  user-select: none;
+}
+
+.start__begin-button {
+  margin-top: 36px;
+  padding: 8px 22px;
+  color: white;
+  font-family: 'Circe';
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 27px;
+  background-color: $blue-main;
+}
+.start__begin-button:hover {
+  background-color: $blue-main--hover;
+}
+
+
+
+@media screen and (max-width: 1270px){
+  .wrapper {
+    max-width: none;
+    margin: 0;
+  }
+
+  .start {
+    flex-direction: column;
+    align-items: center;
+    max-height: calc(100vh - 60px);
+    min-width: 100vw;
+  }
+
+  .start__container {
+    margin-top: 60px;
+    margin-bottom: 0;
+  }
+
+  .start__ellipse {
+    display: none;
+  }
+
+  .start__title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .start__begin-button {
+    margin: 36px auto 0;
+  }
+
+  .start__illustration {
+    max-height: 100%;
+    width: content-box;
+    margin-top: 0;
+  }
+
+  .start__image-container {
+    max-height: calc(100vh - 347px);
+  }
+
+  @media screen and (max-width: 768px) {
+    .start__title {
+      font-size: 56px;
+      line-height: 56px;
+    }
+  }
 }

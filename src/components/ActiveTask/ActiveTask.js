@@ -64,12 +64,10 @@ function ActiveTask(props) {
     const [categoryName, setCategoryName] = React.useState(null)
     const handleCategoryName = (name) => setCategoryName(name)
 
-    const deadline = moment(props.deadline).utc().format('MMM DD') + ', ' + moment(props.deadline).utc().format('HH:MM A').toLowerCase();
-    const dateOfCreation = moment(props.createdIn).utc().format('MMM DD') + ', ' + moment(props.createdIn).utc().format('HH:MM A').toLowerCase();
+    const deadline = moment(props.deadline).utc().format('MMM DD, HH:MM a')
+    const dateOfCreation = moment(props.createdIn).utc().format('MMM DD,  HH:MM a')
+    const dateOfNotification =  moment(props.remindAt).utc().format('MMM DD, HH:MM a')
 
-    const notificationToMinutes = moment(props.remindIn, "HH:mm:ss").diff(moment().startOf('day'), 'minutes');
-
-    const notificationDate = moment(props.deadline).subtract(notificationToMinutes, 'minutes').utc().format("MMM DD, HH:MM a")
 
     const sendDeleteTask = () => {
         const token = localStorage.getItem('authorization');
@@ -151,7 +149,7 @@ function ActiveTask(props) {
                             <div className="active-task__notification-container">
                                 <img src={props.priority === 'Important' ? bellRedIcon : bellGreyIcon} alt="bell icon"/>
                                 <p className="active-task__info-data">
-                                    {notificationDate}
+                                    {dateOfNotification}
                                 </p>
                             </div>
                         </div>

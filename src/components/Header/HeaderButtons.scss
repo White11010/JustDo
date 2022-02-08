@@ -3,30 +3,28 @@
 .header__buttons-container {
   display: flex;
   align-items: center;
+  gap: 22px;
   margin-left: auto;
-  font-family: Circe;
+  font-family: 'Circe';
   font-weight: bold;
   font-size: 18px;
   line-height: 27px;
 }
 
-.header__registration-button {
-  margin-right: 22px;
-  color: $blue-main;
-  padding: 7px 22px;
-  border: 1px solid $blue-main;
-
-}
-.header__registration-button:hover {
-  color: white;
-  background-color: $blue-main--hover;
+.header__button {
+  padding: 2.5px 22px;
 }
 
-.header__login-button {
-  padding: 8px 22px;
-  background-color: $blue-main;
-  color: white;
-}
-.header__login-button:hover {
-  background-color: $blue-main--hover;
+@media screen and (max-width: 768px){
+  .header__buttons-container {
+    width: 100%;
+    flex: 1;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .header__button {
+    width: 100%;
+  }
 }

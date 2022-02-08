@@ -4,10 +4,10 @@ import logo from '../../assets/images/logo.svg';
 
 function HeaderLogo(props) {
     return (
-        <>
+        <div className="header__logo">
             <img src={logo} alt="logo"/>
             <h2 className="header__title">JustDo</h2>
-        </>
+        </div>
     );
 }
 

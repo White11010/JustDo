@@ -4,8 +4,8 @@ import './HeaderButtons.scss';
 function HeaderButtons(props) {
     return (
         <div className="header__buttons-container">
-            <button className="button button--secondary header__registration-button" onClick={() => {props.handleOpen(); props.handleRegistration();}}>Registration</button>
-            <button className="button button--primary header__login-button" onClick={() => {props.handleOpen(); props.handleLogin();}}>Log in</button>
+            <button className="button button--secondary header__button" onClick={() => {props.handleOpen(); props.handleRegistration();}}>Registration</button>
+            <button className="button button--primary header__button" onClick={() => {props.handleOpen(); props.handleLogin();}}>Log in</button>
         </div>
     );
 }

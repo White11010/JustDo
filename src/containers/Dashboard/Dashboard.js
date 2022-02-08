@@ -1,5 +1,6 @@
-import React from 'react';
-import {useSelector} from "react-redux";
+import React, {useEffect} from 'react';
+import { io } from "socket.io-client";
+import {useDispatch, useSelector} from "react-redux";
 import {selectActiveTask} from "../../features/tasksSlice";
 import {selectTags} from "../../features/tagsSlice";
 import UserProfile from "../../components/UserProfile/UserProfile";
@@ -11,14 +12,65 @@ import DashboardSidebarLine from "../../components/Dashboard/DashboardSidebarLin
 import Groups from "../Groups/Groups";
 import Tasks from "../Tasks/Tasks";
 import ActiveTask from "../../components/ActiveTask/ActiveTask";
-
+import {selectUserData, setUserData} from "../../features/userSlice";
+import axios from "axios";
 
 
 function Dashboard(props) {
 
+    const dispatch = useDispatch()
+
     const activeTask = useSelector(selectActiveTask);
 
     const tags = useSelector(selectTags);
+
+    const getUserData = (token) => {
+        return axios({
+            method: "get",
+            url: "http://34.125.5.252:3000/api/users",
+            headers: {'authorization': 'Bearer ' + token}
+        })
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                throw error;
+            })
+    };
+
+    useEffect(() => {
+        const token = localStorage.getItem('authorization');
+        if (token) {
+            getUserData(token)
+                .then(response => {
+                    dispatch(setUserData(response.data));
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+    }, [])
+
+    const userData = useSelector(selectUserData)
+
+    useEffect(() => {
+        if (userData !== null) {
+            const socket = io("http://34.125.5.252:3000/api/websockets?id=" + userData.id)
+            socket.on("connect", () => {
+                console.log("Connected!")
+            })
+            socket.on("reminder", (data) => {
+                console.log(data)
+            })
+            socket.on("expired", (data) => {
+                console.log(data)
+            })
+        }
+    }, [userData])
+
+
+
+
 
     return (
         <div className="dashboard" style={activeTask ? {gridTemplateColumns: '280px 1fr 284px'} : {gridTemplateColumns: '280px 1fr 0'}}>
@@ -43,7 +95,7 @@ function Dashboard(props) {
                             categoryId={activeTask.categoryId}
                             deadline={activeTask.deadline}
                             createdIn={activeTask.createdIn}
-                            remindIn={activeTask.remindIn}
+                            remindAt={activeTask.remindAt}
                             tags={activeTask.tags}
                             description={activeTask.description}
                         />

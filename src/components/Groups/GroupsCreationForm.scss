@@ -1,0 +1,32 @@
+@import "src/assets/scss/variables";
+
+.groups__creation-form {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 108px 64px 62px 64px;
+}
+
+.groups__creation-form-title {
+  margin-bottom: 37px;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 24px;
+  color: $bluedark-main;
+}
+
+.groups__creation-form-button {
+  display: flex;
+  align-items: center;
+  font-family: Circe;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 27px;
+  margin-top: 30px;
+  margin-left: auto;
+  padding: 8px  44px 8px 22px;
+}

@@ -10,8 +10,8 @@ function GroupsList(props) {
                     return (
                         <GroupsItem
                             key={group.id}
-                            title={group.title}
-                            tasksNumber={group.tasksNumber}
+                            id={group.id}
+                            title={group.name}
                         />
                     )
                 })

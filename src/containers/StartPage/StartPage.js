@@ -1,13 +1,39 @@
 import * as React from 'react';
 import './StartPage.scss';
-import StartPageTitle from "../../components/StartPage/StartPageTitle";
-import StartPageIllustration from "../../components/StartPage/StartPageIllustration";
-import StartPageBeginButton from "../../components/StartPage/StartPageBeginButton";
-import StartPageEllipse from "../../components/StartPage/StartPageEllipse";
 import StartModal from "../../components/StartModal/StartModal";
-import Header from "../Header/Header";
+import Header from "../../components/Header/Header";
+import illustration from "../../assets/images/Illustration.svg";
 
-function StartPage(props) {
+
+
+function StartPageEllipse() {
+    return (
+        <div className="start__ellipse"/>
+    );
+}
+
+function StartPageTitle() {
+    return (
+        <h1 className="start__title">
+            <span className="start__title--blue">Be productive</span>
+            <span><span className="start__title--blue"> with</span><span className="start__title--red"> JustDo</span></span>
+        </h1>
+    );
+}
+
+function StartPageIllustration() {
+    return (
+        <img className="start__illustration" src={illustration} alt="illustration"/>
+    );
+}
+
+function StartPageBeginButton(props) {
+    return (
+        <button className="button button--primary start__begin-button" onClick={() => {props.handleOpen(); props.handleRegistration();}}>To begin</button>
+    );
+}
+
+function StartPage() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -18,7 +44,7 @@ function StartPage(props) {
 
 
     return (
-        <>
+        <div className="wrapper">
             <Header handleOpen={handleOpen} handleRegistration={handleRegistration} handleLogin={handleLogin}/>
             <div className="start">
                 <div className="start__container">
@@ -26,10 +52,12 @@ function StartPage(props) {
                     <StartPageTitle/>
                     <StartPageBeginButton handleOpen={handleOpen} handleRegistration={handleRegistration}/>
                 </div>
-                <StartPageIllustration/>
+                <div className="start__image-container">
+                    <StartPageIllustration/>
+                </div>
                 <StartModal open={open} handleClose={handleClose} currentForm={currentForm} handleRegistration={handleRegistration} handleLogin={handleLogin}/>
             </div>
-        </>
+        </div>
     );
 }
 

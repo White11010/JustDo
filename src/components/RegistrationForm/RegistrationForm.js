@@ -1,7 +1,7 @@
 import * as React from 'react';
-import RegistrationFormFirst from "../../components/RegistrationFormPages/RegistrationFormFirst";
-import RegistrationFormSecond from "../../components/RegistrationFormPages/RegistrationFormSecond";
-import RegistrationFormThird from "../../components/RegistrationFormPages/RegistrationFormThird";
+import RegistrationFormFirst from "./RegistrationFormFirst";
+import RegistrationFormSecond from "./RegistrationFormSecond";
+import RegistrationFormThird from "./RegistrationFormThird";
 import axios from 'axios'
 
 function RegistrationForm(props) {
@@ -44,6 +44,7 @@ function RegistrationForm(props) {
 
     const onSubmit = () => {
       setFormData();
+        console.log(registrationData)
       sendRegistrationData()
           .then(response => console.log(response))
           .catch(error => console.log(error.response));

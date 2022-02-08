@@ -1,15 +1,18 @@
 import React, { useRef } from 'react';
 import { useForm, Controller } from "react-hook-form";
-import StartModalTitle from "../StartModal/StartModalTitle";
-import RegistrationDots from "../RegistrationForm/RegistrationDots";
-import StartModalButton from "../StartModal/StartModalButton";
-import '../../containers/RegistrationForm/RegistrationForm.scss';
-import {FormControl, FormHelperText, TextField} from "@mui/material";
-import RegistrationFormBackButton from "../RegistrationForm/RegistrationFormBackButton";
+import RegistrationDots from "./RegistrationDots";
+import './RegistrationForm.scss';
+import arrowIcon from '../../assets/images/bx-chevron-left.svg'
+import arrowIconWhite from '../../assets/images/bx-chevron-left-white.svg'
 import FormInput from "../FormInputs/FormInput";
 
 
 function RegistrationFormSecond(props) {
+    const [bgImage, setBgImage] = React.useState(arrowIcon);
+    const handleMouseOver = () => setBgImage(arrowIconWhite)
+    const handleMouseOut = () => setBgImage(arrowIcon)
+    const handleClick = () => setBgImage(arrowIconWhite)
+
     const { register, handleSubmit, watch, errors, formState } = useForm({ mode: "onChange" });
     const password = useRef({});
     password.current = watch("password");
@@ -19,10 +22,11 @@ function RegistrationFormSecond(props) {
         props.handleNextPage();
     };
 
+
     return (
         <div className="registration">
             <RegistrationDots pageNumber="2"/>
-            <StartModalTitle title="Almost done"/>
+            <h3 className="registration__title">Almost done</h3>
             <form onSubmit={handleSubmit(onSubmit)} className="registration__container">
                 <FormInput
                     ref={register({ required: true, minLength: 8, pattern: /[A-Z]{2}/ })}
@@ -37,7 +41,8 @@ function RegistrationFormSecond(props) {
                     <p>- at least 2 capital letters</p>
                     <p>- at least 1 special character (!, @, etc)</p>
                     <p>- at least 1 digit</p>
-                    <p>- spaces and line breaks must be absent</p>
+                    <p>- spaces and line breaks must</p>
+                    <p>&nbsp; be absent</p>
                 </div>
                 <FormInput
                     ref={register({ validate: value => value === password.current })}
@@ -48,8 +53,14 @@ function RegistrationFormSecond(props) {
                     style={{marginBottom: '30px'}}
                 />
                 <div className="registration__buttons">
-                    <RegistrationFormBackButton handlePrevPage={props.handlePrevPage}/>
-                    <StartModalButton type="submit" disabled={!formState.isValid} style={{width: '100%'}}/>
+                    <button
+                        className="button registration__back-button"
+                        onClick={() => {props.handlePrevPage(); handleClick()}}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                        style={{ backgroundImage: `url(${bgImage})` }}
+                    />
+                    <button type="submit" className="button button--primary registration__next-button" disabled={!formState.isValid}>Next</button>
                 </div>
             </form>
         </div>

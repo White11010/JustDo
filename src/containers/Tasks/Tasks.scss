@@ -17,6 +17,11 @@
 
 .tasks__arrow-icon {
   margin-left: 10px;
+  transition: transform .3s ease-in-out;
+
+  &--up {
+    transform: rotate(-180deg);
+  }
 }
 
 .tasks__add-button {

@@ -9,14 +9,78 @@ import {useDispatch} from "react-redux";
 import { setTasks} from "../../features/tasksSlice";
 import {useSelector} from "react-redux";
 import {selectTasks} from "../../features/tasksSlice";
-import {setTags} from "../../features/tagsSlice";
+import {selectActiveTag, setTags} from "../../features/tagsSlice";
+import {selectActiveCategory} from "../../features/categoriesSlice";
+import {selectSearch, selectSort} from "../../features/filtersSlice";
 
+const priorities = ['Important', 'Middle', 'Neutral', 'Low'];
 
 function Tasks() {
 
     const dispatch = useDispatch();
 
     const tasks = useSelector(selectTasks)
+
+    const activeCategory = useSelector(selectActiveCategory)
+    const activeTag = useSelector(selectActiveTag)
+    const searchString = useSelector(selectSearch)
+    const sortOption = useSelector(selectSort)
+
+    const [tasksList, setTasksList] = React.useState(tasks)
+    const handleTaskList = (tasks) => setTasksList(tasks)
+
+    useEffect(() => {
+        handleTaskList(getFilteredTasks);
+    }, [tasks])
+
+    useEffect(() => {
+        handleTaskList(getFilteredTasks)
+    }, [activeCategory, activeTag, searchString])
+
+    useEffect(() => {
+        handleTaskList(getSortedTasks(tasksList))
+    }, [sortOption])
+
+
+    const getSortedTasks = (tasksArray) => {
+        const arrayForSort = [...tasksArray];
+        switch (sortOption) {
+            case null:
+                return arrayForSort;
+            case 'Sort by name':
+               return arrayForSort.sort((a, b) => {
+                    return (a.name < b.name) ? -1 : ((a.name > b.name) ? 1 : 0);
+                })
+            case 'Sort by date':
+                return arrayForSort.sort((a, b) => {
+                    return (a.createdAt < b.createdAt) ? 1 : ((a.createdAt > b.createdAt) ? -1 : 0);
+                })
+            case 'Sort by priority':
+               return arrayForSort.sort((a, b) => {
+                    return (priorities.indexOf(a.priority) < priorities.indexOf(b.priority)) ? -1 : (priorities.indexOf(a.priority) > priorities.indexOf(b.priority) ? 1 : 0);
+                })
+            default:
+                return arrayForSort;
+        }
+    }
+
+
+    const getFilteredTasks = () => {
+        const filteredTasks = tasks.filter(task => {
+            return (
+                (activeCategory === 'All' || task.categoryId == activeCategory) && (activeTag === 'All' || task.tags !== null && task.tags.split(' ').includes(activeTag)) && (searchString === '' || task.name.toLowerCase().includes(searchString.toLowerCase()))
+            );
+        })
+        //Tasks array should be sorted after by active option after each category or another filter change
+        return getSortedTasks(filteredTasks);
+    }
+
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(!open)
+    };
+
 
     //Setting all unique tags from all tasks in redux state
     useEffect(() => {
@@ -64,23 +128,31 @@ function Tasks() {
         }
 
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [modalOpen, setModalOpen] = React.useState(false);
+    const handleModalOpen = () => setModalOpen(true);
+    const handleModalClose = () => setModalOpen(false);
+
+    const arrowDownClassName = "groups__arrow-icon groups__arrow-icon--down"
+    const arrowUpClassName = "groups__arrow-icon groups__arrow-icon--up"
 
     return (
         <div className="tasks">
             <div className="tasks__header">
-                <h3 className="tasks__title">My tasks</h3>
-                <img src={arrowIcon} alt="arrow" className="tasks__arrow-icon"/>
-                <TasksFilters/>
-                <button className="button button--primary tasks__add-button" onClick={handleOpen}>Create task</button>
+                <h3 className="tasks__title" onClick={handleOpen}>My tasks</h3>
+                <img src={arrowIcon} alt="arrow" className={open ? arrowUpClassName : arrowDownClassName} onClick={handleOpen}/>
+                {
+                    open &&
+                    <>
+                        <TasksFilters/>
+                        <button className="button button--primary tasks__add-button" onClick={handleModalOpen}>Create task</button>
+                    </>
+                }
             </div>
             {
-                tasks.length !== 0 &&
-                <TasksList tasks={tasks}/>
+                tasks.length !== 0 && open &&
+                <TasksList tasks={tasksList}/>
             }
-            <TaskCreationModal open={open} handleClose={handleClose} isCreation={true}/>
+            <TaskCreationModal open={modalOpen} handleClose={handleModalClose} isCreation={true}/>
         </div>
     );
 }

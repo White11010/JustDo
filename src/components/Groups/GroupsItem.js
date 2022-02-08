@@ -5,6 +5,12 @@ import pencilIcon from "../../assets/images/bxs-pencil.svg";
 import arrowIcon from '../../assets/images/bx-chevron-down-big.svg';
 
 function GroupsItem(props) {
+
+    const [open, setOpen] = React.useState(false)
+    const handleOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false)
+
+
     return (
         <li className="groups__item">
             <img src={folderIcon} alt="folder" className="groups__folder-icon"/>
