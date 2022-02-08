@@ -1,5 +1,10 @@
 @import "../../assets/scss/variables";
 
+.header__logo {
+  display: flex;
+  align-items: center;
+}
+
 .header__title {
   margin-left: 24px;
   color: $blue-main;
@@ -7,4 +12,10 @@
   font-size: 24px;
   font-weight: 800;
   line-height: 35px;
+}
+
+@media screen and (max-width: 1270px){
+  .header__logo {
+    margin-bottom: 40px;
+  }
 }

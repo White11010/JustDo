@@ -4,6 +4,7 @@ import categoriesReducer from '../features/categoriesSlice';
 import tagsReducer from '../features/tagsSlice'
 import groupsReducer from '../features/groupsSlice'
 import tasksReducer from '../features/tasksSlice'
+import filtersReducer from '../features/filtersSlice'
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
         categories: categoriesReducer,
         tags: tagsReducer,
         groups: groupsReducer,
-        tasks: tasksReducer
+        tasks: tasksReducer,
+        filters: filtersReducer
     },
 });

@@ -170,7 +170,6 @@ function CategoriesList() {
                 if (response.status === 200) {
                     dispatch(deleteCategory(event.target.attributes.id.value))
                     dispatch(setActiveCategory('All'))
-                    dispatch(setFilteredTasks({category: 'All'}))
                 }
             })
     }

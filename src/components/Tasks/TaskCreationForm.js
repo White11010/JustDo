@@ -14,6 +14,7 @@ import TaskPrioritySelect from "../TasksInputs/TaskPrioritySelect";
 import TaskCategorySelect from "../TasksInputs/TaskCategorySelect";
 import TaskNotificationSelect from "../TasksInputs/TaskNotificationSelect";
 import TasksTagsInput from "../TasksInputs/TasksTagsInput";
+import moment from "moment";
 
 function TaskCreationForm(props) {
 
@@ -27,7 +28,7 @@ function TaskCreationForm(props) {
 
     const activeCategory = useSelector(selectActiveCategory)
 
-    const [taskData, setTaskData] = React.useState({});
+    const [taskData, setTaskData] = React.useState({status: 'queued'});
 
     const handleTaskData = (data) => {
         setTaskData(Object.assign(taskData, data))
@@ -35,6 +36,8 @@ function TaskCreationForm(props) {
 
     const sendTaskData = () => {
         const token = localStorage.getItem('authorization');
+
+        console.log(taskData)
 
         return axios({
             method: "post",
@@ -52,14 +55,19 @@ function TaskCreationForm(props) {
 
 
     const onSubmit = (data) => {
+        const notificationToMinutes = moment(taskData.remindAt, "HH:mm:ss").diff(moment().startOf('day'), 'minutes');
+        const notificationDate = moment(taskData.deadline).subtract(notificationToMinutes, 'minutes').utc().toISOString()
         handleTaskData(data);
+        // handleTaskData({remindAt: notificationDate})
+        handleTaskData({deadline: "2022-02-07T16:01:00.000Z"})
+        handleTaskData({remindAt: "2022-02-07T15:56:00.000Z"})
         sendTaskData()
             .then((response) => {
                 console.log(response)
                 if (response.status === 201) {
                     dispatch(addTask(response.data.data))
                     if (response.data.data.categoryId == activeCategory || activeCategory === 'All') {
-                        dispatch(addFilteredTask(response.data.data))
+                        dispatch(addTask(response.data.data))
                     }
                     props.handleCose();
                 }
@@ -94,7 +102,7 @@ function TaskCreationForm(props) {
             />
             <TaskNotificationSelect
                 style={{flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginRight: '12px'}}
-                keyWord="remindIn"
+                keyWord="remindAt"
                 remindIn="00:05:00"
                 handleTaskData={handleTaskData}
             />

@@ -48,13 +48,17 @@ code {
   align-items: center;
   box-sizing: border-box;
   border-radius: 10px;
+
+  &:disabled {
+    cursor: auto;
+  }
 }
 
 .button--primary {
   color: white;
   background-color: $blue-main;
 }
-.button--primary:hover {
+.button--primary:not(:disabled):hover {
   background-color: $blue-main--hover;
 }
 
@@ -63,7 +67,7 @@ code {
   background-color: white;
   border: 1px solid $blue-main;
 }
-.button--secondary:hover {
+.button--secondary:not(:disabled):hover {
   color: white;
   background-color: $blue-main;
 }
@@ -77,5 +81,19 @@ code {
 .button--cancel:hover {
   color: white;
   background-color: $red-main;
+}
+
+.modal__close-icon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px){
+  .modal__close-icon {
+    top: 20px;
+    right: 20px;
+  }
 }
 

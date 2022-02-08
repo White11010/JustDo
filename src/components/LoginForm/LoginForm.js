@@ -1,13 +1,20 @@
 import React from 'react';
-import StartModalTitle from "../../components/StartModal/StartModalTitle";
-import {Controller, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import "./LoginForm.scss";
 import axios from "axios";
-import LoginFormLink from "../../components/LoginForm/LoginFormLink";
-import FormInput from "../../components/FormInputs/FormInput";
+import FormInput from "../FormInputs/FormInput";
 import {useNavigate} from "react-router";
 import {useDispatch} from "react-redux";
 import {setAuth} from "../../features/userSlice";
+
+function LoginFormLink(props) {
+    return (
+        <p className="registration__link">
+            <span className="registration__link--gray">Don't have an account?</span>
+            <span className="registration__link--blue" onClick={props.handleRegistration}> Check in</span>
+        </p>
+    );
+}
 
 function LoginForm(props) {
 
@@ -15,7 +22,7 @@ function LoginForm(props) {
 
     const navigate = useNavigate();
 
-    const { register, handleSubmit, watch, errors, formState } = useForm({ mode: "onChange" });
+    const { register, handleSubmit, formState } = useForm({ mode: "onChange" });
 
     const sendLoginData = (data) => {
         return axios({
@@ -44,7 +51,7 @@ function LoginForm(props) {
 
     return (
         <div className="login">
-            <StartModalTitle title="Log in"/>
+            <h3 className="login__title">Log in</h3>
             <LoginFormLink handleRegistration={props.handleRegistration}/>
             <form onSubmit={handleSubmit(onSubmit)} className="login__container">
                 <FormInput

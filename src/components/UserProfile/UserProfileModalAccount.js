@@ -5,7 +5,6 @@ import {useDispatch} from "react-redux";
 import {useForm} from "react-hook-form";
 import {useSelector} from "react-redux";
 import {selectUserData, setUserData} from "../../features/userSlice";
-import {containerClasses} from "@mui/material";
 import axios from "axios";
 import UserProfileFileUploader from "./UserProfileFileUploader";
 import closeIcon from "../../assets/images/bx-close.svg"
@@ -21,7 +20,7 @@ function UserProfileModalAccount(props) {
     const [image, setImage] = React.useState(null);
     const handleAddImage = (imageData) => setImage(imageData);
 
-    const {register, handleSubmit, formState} = useForm({mode: "onChange"});
+    const {register, handleSubmit} = useForm({mode: "onChange"});
 
 
     const onSubmit = (data) => {
@@ -66,7 +65,7 @@ function UserProfileModalAccount(props) {
 
     return (
         <div className="user-modal__account">
-            <img src={closeIcon} alt="close" className="user-modal__close-icon" onClick={props.handleModalClose}/>
+            <img src={closeIcon} alt="close" className="modal__close-icon" onClick={props.handleModalClose}/>
             <div>
                 <h3 className="user-modal__account-title">Account</h3>
                 <p className="user-modal__account-subtitle">Profile</p>

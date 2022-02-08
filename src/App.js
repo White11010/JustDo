@@ -9,6 +9,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import {useDispatch} from "react-redux";
 import {setAuth} from "./features/userSlice";
+import {io} from "socket.io-client";
 
 function App() {
     const navigate = useNavigate();

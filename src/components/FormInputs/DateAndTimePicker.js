@@ -19,9 +19,6 @@ export default function DateAndTimePicker(props) {
 
     const [value, setValue] = React.useState(new Date());
 
-    const logDate = () => {
-        console.log(value.toISOString());
-    }
 
     const handleChange = (newValue) => {
         setValue(newValue);
