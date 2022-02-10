@@ -9,7 +9,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import {useDispatch} from "react-redux";
 import {setAuth} from "./features/userSlice";
-import {io} from "socket.io-client";
+import AuthGuard from "./services/AuthGuard";
 
 function App() {
     const navigate = useNavigate();
@@ -52,7 +52,7 @@ function App() {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <Routes>
                     <Route path="/" element={<StartPage/>}/>
-                    <Route path="/dashboard" element={<Dashboard/>}/>
+                    <Route path="/dashboard" element={<AuthGuard><Dashboard/></AuthGuard>}/>
                 </Routes>
             </LocalizationProvider>
         </div>
