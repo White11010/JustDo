@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.1ae6422f.css",
-    "main.js": "/static/js/main.804f3d56.js",
+    "main.js": "/static/js/main.dd0418c0.js",
     "static/media/Circe-ExtraLight.eot": "/static/media/Circe-ExtraLight.0f3ca43ce4ca34c99c00.eot",
     "static/media/Circe-ExtraLight.ttf": "/static/media/Circe-ExtraLight.d95151f8b96ed97a9681.ttf",
     "static/media/Circe-Thin.eot": "/static/media/Circe-Thin.00bb023a19a35602c7fa.eot",
@@ -65,10 +65,10 @@
     "static/media/yellow-circle.svg": "/static/media/yellow-circle.d347d430370f7ef34a823458b42d3660.svg",
     "static/media/red-circle.svg": "/static/media/red-circle.51c9f784aa7e2762204735845ab50e37.svg",
     "main.1ae6422f.css.map": "/static/css/main.1ae6422f.css.map",
-    "main.804f3d56.js.map": "/static/js/main.804f3d56.js.map"
+    "main.dd0418c0.js.map": "/static/js/main.dd0418c0.js.map"
   },
   "entrypoints": [
     "static/css/main.1ae6422f.css",
-    "static/js/main.804f3d56.js"
+    "static/js/main.dd0418c0.js"
   ]
 }
