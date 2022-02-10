@@ -4,8 +4,6 @@ import StartModal from "../../components/StartModal/StartModal";
 import Header from "../../components/Header/Header";
 import illustration from "../../assets/images/Illustration.svg";
 
-
-
 function StartPageEllipse() {
     return (
         <div className="start__ellipse"/>
@@ -34,6 +32,7 @@ function StartPageBeginButton(props) {
 }
 
 function StartPage() {
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

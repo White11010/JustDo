@@ -29,12 +29,13 @@ function RegistrationFormSecond(props) {
             <h3 className="registration__title">Almost done</h3>
             <form onSubmit={handleSubmit(onSubmit)} className="registration__container">
                 <FormInput
-                    ref={register({ required: true, minLength: 8, pattern: /[A-Z]{2}/ })}
+                    ref={register({ required: true, minLength: 8,  pattern:/[A-Z{2,}](?=.*[0-9])(?=.*[^0-9a-zA-Z])/g, })}
                     name="password"
                     type="password"
                     label="Password"
                     placeholder="Enter your password"
                     style={{margin: '37px 0'}}
+                    errorText={errors.password?.type === "pattern" && 'Enter a valid password' || errors.password?.type === "minLength" && 'Password should be 8 symbols at lest' }
                 />
                 <div className="registration__rules">
                     <p>- at least 8 characters</p>
@@ -45,12 +46,13 @@ function RegistrationFormSecond(props) {
                     <p>&nbsp; be absent</p>
                 </div>
                 <FormInput
-                    ref={register({ validate: value => value === password.current })}
-                    name="password-confirmation"
+                    ref={register({ validate: value => value === password.current})}
+                    name="password_confirmation"
                     type="password"
                     label="Password Confirmation"
                     placeholder="Enter your password"
                     style={{marginBottom: '30px'}}
+                    errorText={errors.password_confirmation && "The passwords do not match"}
                 />
                 <div className="registration__buttons">
                     <button

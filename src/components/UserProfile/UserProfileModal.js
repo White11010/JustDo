@@ -1,12 +1,14 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import closeIcon from "../../assets/images/bx-close.svg"
 import './UserProfileModal.scss'
 import UserProfileModalSettings from "./UserProfileModalSettings";
 import UserProfileModalAccount from "./UserProfileModalAccount";
 import axios from "axios";
 import {useMediaQuery} from "react-responsive";
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
+import {useDispatch} from "react-redux";
 
 
 
@@ -31,34 +33,20 @@ function UserProfileModal(props) {
         outline: 'none'
     };
 
-
+    const dispatch = useDispatch();
 
     const deleteUser = () => {
-        sendDeleteUser()
+        API.delete(`/users`)
             .then(response => {
                 if (response.status === 200) {
                     props.logOut()
                 }
             })
-    }
-
-    const sendDeleteUser = () => {
-        const token = localStorage.getItem('authorization');
-
-        return axios({
-            method: "delete",
-            url: "http://34.125.5.252:3000/api/users",
-            headers: {'authorization': 'Bearer ' + token},
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    return response;
-                }
-            })
-            .catch(error => {
-                throw error;
+            .catch(() => {
+                dispatch(setError(true))
             })
     }
+
 
     return (
         <div>

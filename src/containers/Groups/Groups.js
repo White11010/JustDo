@@ -9,35 +9,25 @@ import {setGroups} from "../../features/groupsSlice";
 import axios from "axios";
 import GroupsCreationModal from "../../components/Groups/GroupsCreationModal";
 import {useMediaQuery} from "react-responsive";
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
 
 function Groups() {
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const token = localStorage.getItem('authorization');
-        getGroupsFromApi(token)
+        API.get(`/groups`)
             .then(response => {
                 dispatch(setGroups(response.data))
             })
-            .catch(error => {
-                console.log(error)
+            .catch(() => {
+                dispatch(setError(true))
             })
+
+        const token = localStorage.getItem('authorization');
     }, [])
 
-    const getGroupsFromApi = (token) => {
-        return axios({
-            method: "get",
-            url: "http://34.125.5.252:3000/api/groups",
-            headers: {'authorization': 'Bearer ' + token}
-        })
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                throw error;
-            })
-    }
 
     const groups = useSelector(selectGroups)
 

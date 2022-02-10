@@ -50,6 +50,7 @@ function RegistrationFormThird(props) {
                     label="First Name"
                     placeholder="Enter your first name"
                     style={{margin: '30px 0 24px'}}
+                    errorText={errors.firstName?.type === "required" && 'First name is required'}
                 />
                 <FormInput
                     ref={register({ required: true })}
@@ -58,6 +59,7 @@ function RegistrationFormThird(props) {
                     label="Last Name"
                     placeholder="Enter your last name"
                     style={{marginBottom: '30px'}}
+                    errorText={errors.lastName?.type === "required" && 'Last name is required'}
                 />
                 <FileUploader  handleAddImage={props.handleAddImage}/>
                 <div className="registration__buttons">

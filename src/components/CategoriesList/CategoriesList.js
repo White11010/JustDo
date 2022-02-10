@@ -10,15 +10,15 @@ import imagePlaceholderIcon from "../../assets/images/bxs-image-alt.svg"
 import editIcon from "../../assets/images/bx-edit-alt.svg"
 import trashIcon from "../../assets/images/bx-trash.svg"
 import {useDispatch, useSelector} from "react-redux";
-import axios from "axios";
 import {
     addCategory,
     selectActiveCategory,
     selectCategories, setActiveCategory,
-    setCategories,
     updateCategory
 } from "../../features/categoriesSlice";
 import {deleteCategory} from "../../features/categoriesSlice";
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
 
 const categoriesIconsMap = {
     home: homeIcon,
@@ -30,7 +30,6 @@ const categoriesIconsMap = {
 
 function CategoriesList() {
     const {register, handleSubmit, watch, errors, formState} = useForm({mode: "onChange"});
-
 
 
     const input = useRef(null)
@@ -72,7 +71,6 @@ function CategoriesList() {
     }
 
 
-
     const handleAddCategory = () => {
         handleOpen();
     }
@@ -83,31 +81,15 @@ function CategoriesList() {
         input.current.focus();
     }
 
-    const sendCategoryData = () => {
-        const token = localStorage.getItem('authorization');
-
-        return axios({
-            method: "post",
-            url: "http://34.125.5.252:3000/api/categories",
-            headers: {'authorization': 'Bearer ' + token},
-            data: {
-                name: categoryName,
-                icon: categoryIcon
-            }
-        })
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                throw error;
-            })
-    }
-
     const onSubmit = (event) => {
         if (event.code === 'Enter' || event.type === 'blur' && (!event.relatedTarget || event.relatedTarget.attributes.id.value !== 'select=category-icon')) {
             handleClose()
             if (categoryName !== '') {
-                sendCategoryData()
+                const data = {}
+                data.name = categoryName;
+                data.icon = categoryIcon;
+
+                API.post(`/categories`, data)
                     .then(response => {
                         if (response.status === 201) {
                             dispatch(addCategory(response.data.data))
@@ -115,8 +97,8 @@ function CategoriesList() {
                             handleCategoryIcon(null)
                         }
                     })
-                    .catch(error => {
-                        console.log(error)
+                    .catch(() => {
+                        dispatch(setError(true))
                     })
             }
         }
@@ -130,66 +112,38 @@ function CategoriesList() {
     const onUpdateSubmit = (event) => {
         if (event.code === 'Enter' || event.type === 'blur') {
             if (event.target.value !== '') {
-                sendUpdatedCategory({name: event.target.value, id: event.target.closest(".categories__item").attributes.id.value})
+                const data = {}
+                data.name = event.target.value;
+                data.id = event.target.closest(".categories__item").attributes.id.value;
+                API.put(`/categories`, data)
                     .then(response => {
                         if (response.status === 200) {
                             dispatch(updateCategory(response.data.data))
                         }
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         console.log(error)
+                        dispatch(setError(true))
                     })
             }
         }
     }
 
-
-    const sendUpdatedCategory = (data) => {
-        const token = localStorage.getItem('authorization');
-
-        return axios({
-            method: "put",
-            url: "http://34.125.5.252:3000/api/categories",
-            headers: {'authorization': 'Bearer ' + token},
-            data: {
-                data
-            }
-        })
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                throw error;
-            })
-    }
-
     const handleDeleteCategory = (event) => {
-        sendDeleteCategory(event.target.attributes.id.value)
+        const data = {}
+        data.id = event.target.attributes.id.value
+        API.delete(`/categories`, {data})
             .then(response => {
                 if (response.status === 200) {
                     dispatch(deleteCategory(event.target.attributes.id.value))
                     dispatch(setActiveCategory('All'))
                 }
             })
-    }
-
-    const sendDeleteCategory = (id) => {
-        const token = localStorage.getItem('authorization');
-
-        return axios({
-            method: "delete",
-            url: "http://34.125.5.252:3000/api/categories",
-            headers: {'authorization': 'Bearer ' + token},
-            data: {
-                id: id
-            }
-        })
-            .then(response => {
-                return response;
+            .catch(() => {
+                dispatch(setError(true))
             })
-            .catch(error => {
-                throw error;
-            })
+
+
     }
 
     useEffect(() => {
@@ -202,10 +156,10 @@ function CategoriesList() {
 
     useEffect(() => {
         if (categories !== null)
-        categories.forEach(category => {
-            handleSetCategoriesHovered({[category.id]: false})
-            handleSetCategoriesUpdating({[category.id]: false})
-        })
+            categories.forEach(category => {
+                handleSetCategoriesHovered({[category.id]: false})
+                handleSetCategoriesUpdating({[category.id]: false})
+            })
     }, [categories])
 
     const allCategoriesNonActiveClassName = "categories__item categories__select-all-button"
@@ -225,7 +179,9 @@ function CategoriesList() {
                 <img src={plusIcon} alt="add category" className="categories__add-button" onClick={handleAddCategory}/>
             </div>
             <ul className="categories__list">
-                <li className={activeCategory === 'All' ? allCategoriesActiveClassName : allCategoriesNonActiveClassName} onClick={handleActiveCategory} id="All">All</li>
+                <li className={activeCategory === 'All' ? allCategoriesActiveClassName : allCategoriesNonActiveClassName}
+                    onClick={handleActiveCategory} id="All">All
+                </li>
                 {
                     categories !== null && categories.map(item => {
                         return (
@@ -239,7 +195,8 @@ function CategoriesList() {
                             >
                                 {
                                     item.icon !== null &&
-                                    <img src={categoriesIconsMap[item.icon]} alt={categoriesIconsMap[item.icon]} className="categories__icon" id={item.id}/>
+                                    <img src={categoriesIconsMap[item.icon]} alt={categoriesIconsMap[item.icon]}
+                                         className="categories__icon" id={item.id}/>
                                 }
                                 {
                                     categoriesUpdating[item.id] ?
@@ -256,8 +213,10 @@ function CategoriesList() {
                                 {
                                     categoriesHovered[item.id] &&
                                     <div className="categories__item-actions" id={item.id}>
-                                        <img src={editIcon} alt="edit category" onClick={handleOpenUpdateInput} id={item.id}/>
-                                        <img src={trashIcon} alt="delete category" onClick={handleDeleteCategory} id={item.id}/>
+                                        <img src={editIcon} alt="edit category" onClick={handleOpenUpdateInput}
+                                             id={item.id}/>
+                                        <img src={trashIcon} alt="delete category" onClick={handleDeleteCategory}
+                                             id={item.id}/>
                                     </div>
                                 }
                             </li>

@@ -18,8 +18,9 @@ import {useDispatch} from "react-redux";
 import {selectCategories} from "../../features/categoriesSlice";
 import {deleteTask} from "../../features/tasksSlice";
 import {setActiveTask} from "../../features/tasksSlice";
-import axios from "axios";
 import TaskCreationModal from "../TasksModals/TaskCreationModal";
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
 
 const prioritiesIconsMap = {
     Neutral: neutralPriorityIcon,
@@ -67,37 +68,21 @@ function ActiveTask(props) {
     const dateOfCreation = moment(props.createdIn).utc().format('MMM DD,  HH:MM a')
     const dateOfNotification =  moment(props.remindAt).utc().format('MMM DD, HH:MM a')
 
-
-    const sendDeleteTask = () => {
-        const token = localStorage.getItem('authorization');
-
-        return axios({
-            method: "delete",
-            url: "http://34.125.5.252:3000/api/tasks",
-            headers: {'authorization': 'Bearer ' + token},
-            data: {id: props.id}
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    return response;
-                }
-            })
-            .catch(error => {
-                throw error;
-            })
-    }
-
     const handleDeleteTask = () => {
-        sendDeleteTask()
+        const data = {}
+        data.id = props.id
+        console.log(data)
+        API.delete(`tasks`, {data})
             .then(res => {
                 if (res.status === 200) {
                     dispatch(deleteTask(props.id))
                     dispatch(setActiveTask(null))
                 }
             })
-            .catch(error => {
-                console.log(error)
+            .catch(() => {
+                dispatch(setError(true))
             })
+
     }
 
 

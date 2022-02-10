@@ -2,7 +2,6 @@ import React from 'react';
 import FormInput from "../FormInputs/FormInput";
 import DateAndTimePicker from "../FormInputs/DateAndTimePicker";
 import TaskTextarea from "../TasksInputs/TaskTextarea";
-import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import {setActiveTask, updateTask} from "../../features/tasksSlice";
@@ -11,6 +10,8 @@ import TaskCategorySelect from "../TasksInputs/TaskCategorySelect";
 import TaskPrioritySelect from "../TasksInputs/TaskPrioritySelect";
 import TaskNotificationSelect from "../TasksInputs/TaskNotificationSelect";
 import {useMediaQuery} from "react-responsive";
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
 
 
 function TaskEditingForm(props) {
@@ -27,43 +28,32 @@ function TaskEditingForm(props) {
         setTaskData(Object.assign(taskData, data))
     }
 
-
-    const sendTaskDataUpdated = () => {
-        const token = localStorage.getItem('authorization');
-
-        return axios({
-            method: "put",
-            url: "http://34.125.5.252:3000/api/tasks",
-            data: taskData,
-            headers: {'authorization': 'Bearer ' + token}
-        })
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                throw error;
-            })
-    }
-
     const onSubmit = (data) => {
         handleTaskData(data);
-        sendTaskDataUpdated()
+        API.put(`tasks`, taskData)
             .then((response) => {
-                console.log(response)
                 if (response.status === 200) {
                     dispatch(updateTask(response.data.data))
                     props.handleCose();
                     dispatch(setActiveTask(null))
                 }
             })
-            .catch(error => console.log(error.response))
+            .catch(() => {
+                dispatch(setError(true))
+            })
     };
 
     const isTablet = useMediaQuery({query: '(max-width: 1270px)'})
     const isMobile = useMediaQuery({query: '(max-width: 768px)'})
 
-    const leftSideInputStyle =  isMobile ? {flexBasis: '100%', marginBottom: '27px'} : (isTablet ? {flexBasis: '100%', marginBottom: '37px'} : {flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginRight: '12px'})
-    const rightSideInputStyle = isMobile ? {flexBasis: '100%', marginBottom: '27px'} : (isTablet ? {flexBasis: '100%', marginBottom: '37px'} : {flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginLeft: '12px'})
+    const leftSideInputStyle = isMobile ? {flexBasis: '100%', marginBottom: '27px'} : (isTablet ? {
+        flexBasis: '100%',
+        marginBottom: '37px'
+    } : {flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginRight: '12px'})
+    const rightSideInputStyle = isMobile ? {flexBasis: '100%', marginBottom: '27px'} : (isTablet ? {
+        flexBasis: '100%',
+        marginBottom: '37px'
+    } : {flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginLeft: '12px'})
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="task-creation__container">
@@ -81,7 +71,7 @@ function TaskEditingForm(props) {
                 keyWord="deadline"
             />
             <FormInput
-                ref={register({required: true})}
+                ref={register()}
                 name="tags"
                 type="text"
                 label="Add Tags"
