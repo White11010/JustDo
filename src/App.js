@@ -30,6 +30,8 @@ function App() {
     };
 
     useEffect(() => {
+        document.title = 'JustDo'
+
         const token = localStorage.getItem('authorization');
         if (token) {
             getUserData(token)

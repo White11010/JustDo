@@ -8,6 +8,8 @@ import {selectUserData, setUserData} from "../../features/userSlice";
 import axios from "axios";
 import UserProfileFileUploader from "./UserProfileFileUploader";
 import closeIcon from "../../assets/images/bx-close.svg"
+import {useMediaQuery} from "react-responsive";
+import UserProfileModalSettings from "./UserProfileModalSettings";
 
 function UserProfileModalAccount(props) {
     const dispatch = useDispatch();
@@ -19,6 +21,9 @@ function UserProfileModalAccount(props) {
 
     const [image, setImage] = React.useState(null);
     const handleAddImage = (imageData) => setImage(imageData);
+
+    const [passwordOpen, setPasswordOpen] = React.useState(false)
+    const handlePasswordOpen = () => setPasswordOpen(true)
 
     const {register, handleSubmit} = useForm({mode: "onChange"});
 
@@ -63,28 +68,37 @@ function UserProfileModalAccount(props) {
             })
     }
 
+    const isTablet = useMediaQuery({query: '(max-width: 1270px)'})
+    const isMobile = useMediaQuery({query: '(max-width: 768px)'})
+
     return (
         <div className="user-modal__account">
             <img src={closeIcon} alt="close" className="modal__close-icon" onClick={props.handleModalClose}/>
             <div>
                 <h3 className="user-modal__account-title">Account</h3>
+                {
+                    isMobile &&
+                    <UserProfileModalSettings/>
+                }
                 <p className="user-modal__account-subtitle">Profile</p>
                 {
                     userData &&
                     <div className="user-modal__account-photo-container">
                         <img
                             src={'http://34.125.5.252:3000/api/' + userData.avatarUrl}
-                             alt="user avatar"
-                             className="user-modal__account-photo"
+                            alt="user avatar"
+                            className="user-modal__account-photo"
                         />
-                        <UserProfileFileUploader
-                            onFileSelect={handleAddImage}
-                        />
-                        <button
-                            className="button button--cancel user-modal__account-photo-button"
-                        >
-                            Delete
-                        </button>
+                        <div className="user-modal__account-photo-actions">
+                            <UserProfileFileUploader
+                                onFileSelect={handleAddImage}
+                            />
+                            <button
+                                className="button button--cancel user-modal__account-photo-button"
+                            >
+                                Delete
+                            </button>
+                        </div>
                         <p className="user-modal__account-photo-info">Pick a photo up to 4MB.</p>
                     </div>
                 }
@@ -98,11 +112,20 @@ function UserProfileModalAccount(props) {
                             label="First Name"
                             placeholder="Enter your first name"
                             value={userData.firstName}
-                            style={{
-                                flexBasis: 'calc(50% - 12px)',
-                                marginBottom: '27px',
-                                marginRight: '12px'
-                            }}
+                            style={
+                                isMobile ? {
+                                    flexBasis: '100%',
+                                    marginBottom: '31px',
+                                } : (isTablet ? {
+                                    flexBasis: 'calc(50% - 8px)',
+                                    marginBottom: '27px',
+                                    marginRight: '8px'
+                                } : {
+                                    flexBasis: 'calc(50% - 8px)',
+                                    marginBottom: '27px',
+                                    marginRight: '12px'
+                                })
+                            }
                         />
                         <FormInput
                             ref={register({required: true})}
@@ -111,11 +134,20 @@ function UserProfileModalAccount(props) {
                             label="Last Name"
                             placeholder="Enter your last name"
                             value={userData.lastName}
-                            style={{
-                                flexBasis: 'calc(50% - 12px)',
-                                marginBottom: '27px',
-                                marginLeft: '12px'
-                            }}
+                            style={
+                                isMobile ? {
+                                    flexBasis: '100%',
+                                    marginBottom: '31px',
+                                } : (isTablet ? {
+                                    flexBasis: 'calc(50% - 8px)',
+                                    marginBottom: '27px',
+                                    marginLeft: '8px'
+                                } : {
+                                    flexBasis: 'calc(50% - 12px)',
+                                    marginBottom: '27px',
+                                    marginLeft: '12px'
+                                })
+                            }
                         />
                         <FormInput
                             ref={register({required: true})}
@@ -124,17 +156,24 @@ function UserProfileModalAccount(props) {
                             label="E-mail"
                             placeholder="Enter your E-Mail"
                             value={userData.email}
-                            style={{
-                                flexBasis: 'calc(50% - 12px)',
-                                marginBottom: '30px',
-                                marginRight: '12px'
-                            }}
+                            style={
+                                isTablet ? {
+                                    flexBasis: '100%',
+                                    marginBottom: '30px',
+                                } : {
+                                    flexBasis: 'calc(50% - 12px)',
+                                    marginBottom: '30px',
+                                    marginRight: '12px'
+                                }
+                            }
                         />
                         <div className="user-modal__account-actions">
                             <button className="button button--secondary user-modal__account-cancel-button"
                                     onClick={props.handleModalClose}>Cancel
                             </button>
-                            <button className="button button--primary user-modal__account-update-button" type="submit">Update</button>
+                            <button className="button button--primary user-modal__account-update-button"
+                                    type="submit">Update
+                            </button>
                         </div>
 
                     </form>
@@ -143,10 +182,76 @@ function UserProfileModalAccount(props) {
                     userData &&
                     <div className="user-modal__account-password-container">
                         <p className="user-modal__account-password-title">Password</p>
-                        <button
-                            className="button button--secondary user-modal__account-password-button">Change
-                            password
-                        </button>
+                        {
+                            passwordOpen ?
+                                <form onSubmit={handleSubmit(onSubmit)} className="user-modal__account-password-form">
+                                    <FormInput
+                                        ref={register({required: true})}
+                                        name="currentPassword"
+                                        type="password"
+                                        label="Current Password"
+                                        placeholder="Enter your current password"
+                                        value={null}
+                                        style={
+                                            isTablet ? {
+                                                flexBasis: '100%',
+                                                marginBottom: '21px',
+                                            } : {
+                                                flexBasis: 'calc(50% - 12px)',
+                                                marginRight: '100px',
+                                                marginBottom: '27px',
+                                            }
+                                        }
+                                    />
+                                    <FormInput
+                                        ref={register({required: true})}
+                                        name="newPassword"
+                                        type="password"
+                                        label="New Password"
+                                        placeholder="Enter new password"
+                                        value={null}
+                                        style={
+                                            isMobile ? {
+                                                flexBasis: '100%',
+                                                marginBottom: '29px',
+                                            } : (isTablet ? {
+                                                flexBasis: 'calc(50% - 8px)',
+                                                marginRight: '8px',
+                                            } : {
+                                                flexBasis: 'calc(50% - 12px)',
+                                                marginRight: '12px',
+                                                marginBottom: '27px',
+                                            })
+
+                                        }
+                                    />
+                                    <FormInput
+                                        ref={register({required: true})}
+                                        name="confirmPassword"
+                                        type="password"
+                                        label="Confirm Password"
+                                        placeholder="Confirm new password"
+                                        value={null}
+                                        style={
+                                            isMobile ? {
+                                                flexBasis: '100%',
+                                            } : (isTablet ? {
+                                                flexBasis: 'calc(50% - 8px)',
+                                                marginLeft: '8px',
+                                            } : {
+                                                flexBasis: 'calc(50% - 12px)',
+                                                marginLeft: '12px',
+                                                marginBottom: '27px',
+                                            })
+                                        }
+                                    />
+                                </form>
+                                :
+                                <button className="button button--secondary user-modal__account-password-button" onClick={handlePasswordOpen}>
+                                    Change password
+                                </button>
+                        }
+
                     </div>
                 }
                 <div className="user-modal__account-line"/>
@@ -154,7 +259,7 @@ function UserProfileModalAccount(props) {
                     userData &&
                     <div className="user-modal__account-delete-container">
                         <p className="user-modal__account-delete-title">Delete account</p>
-                        <button className="button button--cancel user-modal__account-password-button"
+                        <button className="button button--cancel user-modal__account-password-button user-modal__account-delete-button"
                                 onClick={props.deleteUser}>Delete account
                         </button>
                     </div>

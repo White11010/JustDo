@@ -90,6 +90,26 @@ code {
   cursor: pointer;
 }
 
+.modal__container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.modal__back-button {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin-right: 12px;
+  border: 1px solid $lightgray-main;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  &:hover {
+    background-color: $blue-main;
+  }
+}
+
 @media screen and (max-width: 768px){
   .modal__close-icon {
     top: 20px;

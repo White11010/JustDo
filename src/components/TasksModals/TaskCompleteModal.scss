@@ -1,0 +1,66 @@
+@import "../../assets/scss/variables";
+
+.tasks__complete-modal {
+  display: flex;
+  align-items: center;
+  gap: 64.5px;
+  box-sizing: border-box;
+  padding: 51px 98px 56.5px 64px;
+  background: #FFFFFF;
+  border-radius: 20px;
+
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &-title {
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 24px;
+    color: $bluedark-main;
+  }
+
+  &-subtitle {
+    width: max-content;
+    font-family: 'Circe';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 120%;
+    color: $bluedark-main;
+  }
+
+  &-actions {
+    display: flex;
+    gap: 12px;
+  }
+
+  &-button {
+    padding: 8px 22px;
+  }
+}
+
+@media screen and (max-width: 1270px) {
+  .tasks__complete-modal {
+    padding: 51px 42px 56.5px 14px;
+    gap: 40.5px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tasks__complete-modal {
+    flex-direction: column;
+    align-items: center;
+    padding: 51px 28px 79px 28px;
+    gap: 0  ;
+
+    &-container {
+      align-items: center;
+    }
+  }
+}

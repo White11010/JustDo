@@ -19,3 +19,14 @@
   display: flex;
   align-items: center;
 }
+
+@media screen and (max-width: 768px) {
+  .user-modal__file-uploader {
+    position: relative;
+    margin-right: 0;
+  }
+
+  .user-modal__file-uploader-button {
+    padding: 8px 29.5px;
+  }
+}

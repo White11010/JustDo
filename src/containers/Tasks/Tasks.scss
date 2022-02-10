@@ -25,11 +25,24 @@
 }
 
 .tasks__add-button {
+  gap: 10px;
   margin: 0 0 0 auto;
-  padding: 8px 22px;
+  padding: 8px 10px 8px 22px;
   font-family: 'Circe';
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
   line-height: 27px;
+  z-index: 0;
+}
+
+@media screen and (max-width: 1270px) {
+  .tasks {
+    margin-top: 26px;
+  }
+  .tasks__add-button {
+    margin-top: 18px;
+    width: 100%;
+    //padding: 8px 294.5px 8px 306.5px;
+  }
 }

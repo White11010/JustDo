@@ -9,12 +9,16 @@ import {useSelector} from "react-redux";
 import {selectCategories} from "../../features/categoriesSlice";
 import {selectActiveCategory} from "../../features/categoriesSlice";
 import {useDispatch} from "react-redux";
-import {addFilteredTask, addTask} from "../../features/tasksSlice";
+import {addTask} from "../../features/tasksSlice";
 import TaskPrioritySelect from "../TasksInputs/TaskPrioritySelect";
 import TaskCategorySelect from "../TasksInputs/TaskCategorySelect";
 import TaskNotificationSelect from "../TasksInputs/TaskNotificationSelect";
 import TasksTagsInput from "../TasksInputs/TasksTagsInput";
 import moment from "moment";
+import {useMediaQuery} from "react-responsive";
+import arrowIcon from "../../assets/images/bx-chevron-left.svg";
+import arrowIconWhite from "../../assets/images/bx-chevron-left-white.svg";
+import plusIcon from '../../assets/images/bx-plus.svg'
 
 function TaskCreationForm(props) {
 
@@ -32,6 +36,14 @@ function TaskCreationForm(props) {
 
     const handleTaskData = (data) => {
         setTaskData(Object.assign(taskData, data))
+    }
+
+    const [bgImage, setBgImage] = React.useState(arrowIcon);
+    const handleMouseOver = () => setBgImage(arrowIconWhite)
+    const handleMouseOut = () => setBgImage(arrowIcon)
+    const handleClick = () => {
+        setBgImage(arrowIconWhite)
+        props.handleCose()
     }
 
     const sendTaskData = () => {
@@ -66,14 +78,17 @@ function TaskCreationForm(props) {
                 console.log(response)
                 if (response.status === 201) {
                     dispatch(addTask(response.data.data))
-                    if (response.data.data.categoryId == activeCategory || activeCategory === 'All') {
-                        dispatch(addTask(response.data.data))
-                    }
                     props.handleCose();
                 }
             })
             .catch(error => console.log(error.response))
     };
+
+    const isTablet = useMediaQuery({query: '(max-width: 1270px)'})
+    const isMobile = useMediaQuery({query: '(max-width: 768px)'})
+
+    const leftSideInputStyle =  isMobile ? {flexBasis: '100%', marginBottom: '27px'} : (isTablet ? {flexBasis: '100%', marginBottom: '37px'} : {flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginRight: '12px'})
+    const rightSideInputStyle = isMobile ? {flexBasis: '100%', marginBottom: '27px'} : (isTablet ? {flexBasis: '100%', marginBottom: '37px'} : {flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginLeft: '12px'})
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="task-creation__container">
@@ -83,7 +98,7 @@ function TaskCreationForm(props) {
                 type="text"
                 label="Task Name"
                 placeholder="Enter Task Name"
-                style={{flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginRight: '12px'}}
+                style={leftSideInputStyle}
             />
             <DateAndTimePicker
                 handleTaskData={handleTaskData}
@@ -91,24 +106,24 @@ function TaskCreationForm(props) {
             />
             <TasksTagsInput
                 keyWord="tags"
-                style={{flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginRight: '12px'}}
+                style={leftSideInputStyle}
                 handleTaskData={handleTaskData}
             />
             <TaskCategorySelect
-                style={{flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginLeft: '12px'}}
+                style={rightSideInputStyle}
                 keyWord="categoryId"
                 handleTaskData={handleTaskData}
                 categoryId={categories[0].id}
             />
             <TaskNotificationSelect
-                style={{flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginRight: '12px'}}
+                style={leftSideInputStyle}
                 keyWord="remindAt"
                 remindIn="00:05:00"
                 handleTaskData={handleTaskData}
             />
             <TaskPrioritySelect
                 priority="Neutral"
-                style={{flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginLeft: '12px'}}
+                style={rightSideInputStyle}
                 keyWord="priority"
                 handleTaskData={handleTaskData}
             />
@@ -119,8 +134,19 @@ function TaskCreationForm(props) {
                 placeholder="Enter your text"
             />
             <div className="task-creation__actions">
-                <button type="submit" disabled={!formState.isValid}
-                        className="button button--primary task-creation__button">Create Task
+                <button
+                    className="button modal__back-button task-creation__back-button"
+                    onClick={handleClick}
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                    style={{ backgroundImage: `url(${bgImage})` }}
+                />
+                <button type="submit" 
+                        disabled={!formState.isValid}
+                        className="button button--primary task-creation__button"
+                >
+                    Create task
+                    <img src={plusIcon} alt="plus"/>
                 </button>
             </div>
         </form>

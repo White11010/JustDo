@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import './Tasks.scss'
 import arrowIcon from "../../assets/images/bx-chevron-down-big.svg";
 import TasksFilters from "../../components/Tasks/TasksFilters";
-import TaskCreationModal from "../../components/Tasks/TaskCreationModal";
+import TaskCreationModal from "../../components/TasksModals/TaskCreationModal";
 import TasksList from "../../components/Tasks/TasksList";
 import axios from "axios";
 import {useDispatch} from "react-redux";
@@ -12,6 +12,9 @@ import {selectTasks} from "../../features/tasksSlice";
 import {selectActiveTag, setTags} from "../../features/tagsSlice";
 import {selectActiveCategory} from "../../features/categoriesSlice";
 import {selectSearch, selectSort} from "../../features/filtersSlice";
+import {useMediaQuery} from "react-responsive";
+import plusIcon from '../../assets/images/bx-plus.svg'
+import plusBlueIcon from '../../assets/images/bx-plus--blue.svg'
 
 const priorities = ['Important', 'Middle', 'Neutral', 'Low'];
 
@@ -77,9 +80,7 @@ function Tasks() {
 
 
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => {
-        setOpen(!open)
-    };
+    const handleToggle = () => setOpen(!open)
 
 
     //Setting all unique tags from all tasks in redux state
@@ -135,22 +136,55 @@ function Tasks() {
     const arrowDownClassName = "groups__arrow-icon groups__arrow-icon--down"
     const arrowUpClassName = "groups__arrow-icon groups__arrow-icon--up"
 
+    const isTablet = useMediaQuery({query: '(max-width: 1270px)'})
+    const isMobile = useMediaQuery({query: '(max-width: 768px)'})
+
+    useEffect(() => {
+        if (isTablet) {
+            setOpen(true)
+        }
+    }, [isTablet])
+
     return (
         <div className="tasks">
             <div className="tasks__header">
-                <h3 className="tasks__title" onClick={handleOpen}>My tasks</h3>
-                <img src={arrowIcon} alt="arrow" className={open ? arrowUpClassName : arrowDownClassName} onClick={handleOpen}/>
+                {
+                    !isTablet &&
+                    <>
+                        <h3 className="tasks__title" onClick={handleToggle}>My tasks</h3>
+                        <img src={arrowIcon} alt="arrow" className={open ? arrowUpClassName : arrowDownClassName} onClick={handleToggle}/>
+                    </>
+                }
                 {
                     open &&
                     <>
                         <TasksFilters/>
-                        <button className="button button--primary tasks__add-button" onClick={handleModalOpen}>Create task</button>
+                        {
+                            !isTablet &&
+                            <button
+                                className="button button--primary tasks__add-button"
+                                    onClick={handleModalOpen}
+                            >
+                                Create task
+                                <img src={plusIcon} alt="plus"/>
+                            </button>
+                        }
                     </>
                 }
             </div>
             {
                 tasks.length !== 0 && open &&
                 <TasksList tasks={tasksList}/>
+            }
+            {
+                isTablet &&
+                <button
+                    className="button button--secondary tasks__add-button"
+                    onClick={handleModalOpen}
+                >
+                    New task
+                    <img src={plusBlueIcon} alt="plus"/>
+                </button>
             }
             <TaskCreationModal open={modalOpen} handleClose={handleModalClose} isCreation={true}/>
         </div>

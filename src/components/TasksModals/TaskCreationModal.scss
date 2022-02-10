@@ -1,0 +1,31 @@
+@import "../../assets/scss/variables";
+
+.task-modal__container {
+  box-sizing: border-box;
+  padding: 108px 64px;
+}
+
+.task-modal__title {
+  margin-right: auto;
+  margin-bottom: 37px;
+  font-family: Circe;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 24px;
+  color: $bluedark-main;
+}
+
+@media screen and (max-width: 1270px){
+  .task-modal__container {
+    width: 708px;
+    padding: 84px 30px 60px 30px;
+  }
+}
+@media screen and (max-width: 768px){
+  .task-modal__container {
+    width: 335px;
+    padding: 23px 20px 40px 20px;
+
+  }
+}

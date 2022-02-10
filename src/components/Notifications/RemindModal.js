@@ -1,16 +1,12 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import image from '../../assets/images/registration.svg'
-import RegistrationForm from "../RegistrationForm/RegistrationForm";
-import './StartModal.scss';
-import LoginForm from "../LoginForm/LoginForm";
+import React from 'react';
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 import closeIcon from "../../assets/images/bx-close.svg";
-import {useMediaQuery} from "react-responsive";
+import image from "../../assets/images/registration.svg";
+import RegistrationForm from "../RegistrationForm/RegistrationForm";
+import LoginForm from "../LoginForm/LoginForm";
 
-function StartModal(props) {
-    const isTablet = useMediaQuery({query: '(max-width: 1270px)'})
-    const isMobile = useMediaQuery({query: '(max-width: 768px)'})
+function RemindModal(props) {
 
     const style = {
         position: 'absolute',
@@ -53,4 +49,4 @@ function StartModal(props) {
     );
 }
 
-export default StartModal;
+export default RemindModal;

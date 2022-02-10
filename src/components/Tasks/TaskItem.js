@@ -13,6 +13,8 @@ import lowPriorityIcon from "../../assets/images/yellow-circle.svg";
 import './TaskItem.scss'
 import {useSelector} from "react-redux";
 import {selectCategories} from "../../features/categoriesSlice";
+import TaskCompeteModal from "../TasksModals/TaskCompeteModal";
+
 
 const categoriesIconsMap = {
     home: homeIcon,
@@ -41,30 +43,41 @@ function TaskItem(props) {
 
     const categories = useSelector(selectCategories);
 
-    const handleSelectTask = () => {
-        props.selectTask(props.id)
+    const handleSelectTask = (event) => {
+        if (event.target.id === null || event.target.id !== 'complete-button' &&  !open) {
+            props.selectTask(props.id)
+        }
     }
 
     useEffect(() => {
-        categories.forEach((category) => {
-            if (category.id === props.categoryId) {
-                handleCategoryName(category.name)
-                handleCategoryIcon(categoriesIconsMap[category.name.toLowerCase()])
-            }
-        })
-    }, [])
+        if (categories !== null) {
+            categories.forEach((category) => {
+                if (category.id === props.categoryId) {
+                    handleCategoryName(category.name)
+                    handleCategoryIcon(categoriesIconsMap[category.name.toLowerCase()])
+                }
+            })
+        }
+    }, [categories])
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
 
     return (
         <li
             className="tasks__item"
             onClick={handleSelectTask}
         >
-            <div className="tasks__circle-icon"/>
+            <div className="tasks__circle-icon" onClick={handleOpen} id="complete-button"/>
             <p className="tasks-item__title">{props.name}</p>
             <div className="tasks__line"/>
-            <div className="tasks__deadline-container">
-                <img src={props.priority === 'Important' ? bellRedIcon : bellGreyIcon} alt="bell icon"/>
-                <p className="tasks__deadline">{deadline}</p>
+            <div className="tasks__deadline-wrapper">
+                <div className="tasks__deadline-container">
+                    <img src={props.priority === 'Important' ? bellRedIcon : bellGreyIcon} alt="bell icon"/>
+                    <p className="tasks__deadline">{deadline}</p>
+                </div>
             </div>
             <div className="tasks__category">
                 {
@@ -92,6 +105,7 @@ function TaskItem(props) {
                 alt={props.priority}
                 className="tasks__priority-icon"
             />
+            <TaskCompeteModal open={open} handleClose={handleClose} id={props.id}/>
         </li>
     );
 }

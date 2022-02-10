@@ -23,8 +23,7 @@
 
   &-item {
     position: relative;
-    display: flex;
-    align-items: center;
+    display: inline-flex;
   }
 
   &-item-icon {
@@ -40,7 +39,7 @@
     color: rgba(0, 8, 80, 0.75)
   }
 
-  &-item--active::before {
+  &-item--active::after {
     content: '';
     position: absolute;
     width: 3px;
@@ -50,4 +49,34 @@
     background-color: $blue-main;
     cursor: auto;
   }
+}
+
+@media screen and (max-width: 768px) {
+  .user-modal__settings {
+    height: auto;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 34px;
+
+    &-title {
+      display: none;
+    }
+
+    &-list {
+      margin-top: 0;
+    }
+
+    &-item-icon {
+      margin-right: 6px;
+    }
+
+    &-item--active::after {
+      width: 100%;
+      top: calc(100% + 2px);
+      left: 0;
+      height: 2px;
+
+    }
+  }
+
 }
