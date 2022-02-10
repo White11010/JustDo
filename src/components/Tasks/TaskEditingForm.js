@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-import './TaskEditingForm.scss'
+import React from 'react';
 import FormInput from "../FormInputs/FormInput";
 import DateAndTimePicker from "../FormInputs/DateAndTimePicker";
 import TaskTextarea from "../TasksInputs/TaskTextarea";
@@ -11,6 +10,7 @@ import {selectActiveTask} from "../../features/tasksSlice";
 import TaskCategorySelect from "../TasksInputs/TaskCategorySelect";
 import TaskPrioritySelect from "../TasksInputs/TaskPrioritySelect";
 import TaskNotificationSelect from "../TasksInputs/TaskNotificationSelect";
+import {useMediaQuery} from "react-responsive";
 
 
 function TaskEditingForm(props) {
@@ -59,6 +59,12 @@ function TaskEditingForm(props) {
             .catch(error => console.log(error.response))
     };
 
+    const isTablet = useMediaQuery({query: '(max-width: 1270px)'})
+    const isMobile = useMediaQuery({query: '(max-width: 768px)'})
+
+    const leftSideInputStyle =  isMobile ? {flexBasis: '100%', marginBottom: '27px'} : (isTablet ? {flexBasis: '100%', marginBottom: '37px'} : {flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginRight: '12px'})
+    const rightSideInputStyle = isMobile ? {flexBasis: '100%', marginBottom: '27px'} : (isTablet ? {flexBasis: '100%', marginBottom: '37px'} : {flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginLeft: '12px'})
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="task-creation__container">
             <FormInput
@@ -68,7 +74,7 @@ function TaskEditingForm(props) {
                 label="Task Name"
                 placeholder="Enter Task Name"
                 value={activeTask.name}
-                style={{flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginRight: '12px'}}
+                style={leftSideInputStyle}
             />
             <DateAndTimePicker
                 handleTaskData={handleTaskData}
@@ -81,22 +87,23 @@ function TaskEditingForm(props) {
                 label="Add Tags"
                 placeholder=""
                 value={activeTask.tags}
-                style={{flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginRight: '12px'}}
+                style={leftSideInputStyle}
             />
             <TaskCategorySelect
+                style={rightSideInputStyle}
                 keyWord="categoryId"
                 handleTaskData={handleTaskData}
                 categoryId={activeTask.categoryId}
             />
             <TaskNotificationSelect
-                style={{flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginRight: '12px'}}
+                style={leftSideInputStyle}
                 keyWord="remindIn"
                 remindIn={activeTask.remindIn}
                 handleTaskData={handleTaskData}
             />
             <TaskPrioritySelect
                 priority={activeTask.priority}
-                style={{flexBasis: 'calc(50% - 12px)', marginBottom: '37px', marginLeft: '12px'}}
+                style={rightSideInputStyle}
                 keyWord="priority"
                 handleTaskData={handleTaskData}
             />

@@ -117,3 +117,14 @@
   }
 }
 
+@media screen and (max-width: 1270px) {
+  .tasks__filters {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 446px) {
+  .tasks__filters {
+    display: none;
+  }
+}

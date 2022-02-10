@@ -6,25 +6,31 @@ import './UserProfileModal.scss'
 import UserProfileModalSettings from "./UserProfileModalSettings";
 import UserProfileModalAccount from "./UserProfileModalAccount";
 import axios from "axios";
+import {useMediaQuery} from "react-responsive";
 
 
-const style = {
-    display: 'flex',
-    alignItems: 'center',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    boxSizing: 'border-box',
-    transform: 'translate(-50%, -50%)',
-    width: '947px',
-    height: '850px',
-    bgcolor: 'white',
-    borderRadius: '20px',
-    boxShadow: '0px 21px 48px rgba(0, 0, 0, 0.12)',
-    outline: 'none'
-};
 
 function UserProfileModal(props) {
+
+    const isTablet = useMediaQuery({query: '(max-width: 1270px)'})
+    const isMobile = useMediaQuery({query: '(max-width: 768px)'})
+
+    const style = {
+        display: 'flex',
+        alignItems: 'center',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        boxSizing: 'border-box',
+        transform: 'translate(-50%, -50%)',
+        width: isMobile? '335px' : (isTablet ? '708px' : '947px'),
+        height: isMobile? 'auto' : (isTablet ? '812px' : '850px'),
+        bgcolor: 'white',
+        borderRadius: '20px',
+        boxShadow: '0px 21px 48px rgba(0, 0, 0, 0.12)',
+        outline: 'none'
+    };
+
 
 
     const deleteUser = () => {
@@ -65,7 +71,10 @@ function UserProfileModal(props) {
                 }}
             >
                 <Box sx={style}>
-                    <UserProfileModalSettings/>
+                    {
+                        !isMobile &&
+                        <UserProfileModalSettings/>
+                    }
                     <UserProfileModalAccount handleModalClose={props.handleModalClose} deleteUser={deleteUser}/>
                 </Box>
             </Modal>

@@ -62,7 +62,7 @@ function RegistrationFormThird(props) {
                 <FileUploader  handleAddImage={props.handleAddImage}/>
                 <div className="registration__buttons">
                     <button
-                        className="button registration__back-button"
+                        className="button modal__back-button"
                         onClick={() => {props.handlePrevPage(); handleClick()}}
                         onMouseOver={handleMouseOver}
                         onMouseOut={handleMouseOut}

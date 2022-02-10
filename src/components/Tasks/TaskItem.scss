@@ -39,14 +39,14 @@
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  padding: 4px 11px;
+  padding: 2px 11px;
   background: #F2F2F2;
   border-radius: 8px;
 }
 
 .tasks__deadline {
   margin-left: 10px;
-  ont-family: Circe;
+  font-family: Circe;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -89,4 +89,48 @@
 
 .tasks__priority-icon {
   margin-left: auto;
+}
+
+@media screen and (max-width: 1270px) {
+  .tasks__item {
+    position: relative;
+    flex-wrap: wrap;
+  }
+  .tasks__line {
+    display: none;
+  }
+
+  .tasks__circle-icon {
+    margin-bottom: 14px;
+  }
+
+  .tasks-item__title {
+    width: calc(100% - 66px);
+    margin-bottom: 14px;
+  }
+
+  .tasks__priority-icon {
+    top: 33px;
+    right: 0;
+    position: absolute;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tasks__item {
+    box-shadow: 0 2px 7px 1px rgba(77, 78, 109, 0.1);
+  }
+
+  .tasks__deadline-wrapper {
+    width: calc(100% - 16px);
+    margin-bottom: 12px;
+  }
+
+  .tasks__deadline-container {
+    width: fit-content;
+  }
+
+  .tasks__category {
+    margin-left: 0;
+  }
 }

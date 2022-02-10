@@ -115,10 +115,12 @@
 
   .start__image-container {
     max-height: calc(100vh - 347px);
+      //width: 100%;
   }
 
   @media screen and (max-width: 768px) {
     .start__title {
+      min-width: 100%;
       font-size: 56px;
       line-height: 56px;
     }

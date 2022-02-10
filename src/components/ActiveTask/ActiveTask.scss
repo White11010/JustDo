@@ -113,6 +113,15 @@
   }
 }
 
+.active-task__description {
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: $headline-gray;
+}
+
 .active-task__actions {
   width: 100%;
   justify-self: flex-end;
@@ -137,3 +146,12 @@
   padding: 8px 0;
 }
 
+@media screen and (max-width: 1270px) {
+  .active-task {
+    min-height: calc(100vh - 80px);
+  }
+
+  .active-task__header {
+    margin-bottom: 30px;
+  }
+}

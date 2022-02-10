@@ -19,7 +19,6 @@ import {
     updateCategory
 } from "../../features/categoriesSlice";
 import {deleteCategory} from "../../features/categoriesSlice";
-import {setFilteredTasks} from "../../features/tasksSlice";
 
 const categoriesIconsMap = {
     home: homeIcon,
@@ -199,33 +198,7 @@ function CategoriesList() {
 
     const dispatch = useDispatch();
 
-    const getCategoriesFromApi = (token) => {
-        return axios({
-            method: "get",
-            url: "http://34.125.5.252:3000/api/categories",
-            headers: {'authorization': 'Bearer ' + token}
-        })
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                throw error;
-            })
-    }
-
-    const categories = useSelector(selectCategories) || null;
-
-    useEffect(() => {
-        const token = localStorage.getItem('authorization');
-
-        getCategoriesFromApi(token)
-            .then(response => {
-                dispatch(setCategories(response.data))
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }, [])
+    const categories = useSelector(selectCategories);
 
     useEffect(() => {
         if (categories !== null)

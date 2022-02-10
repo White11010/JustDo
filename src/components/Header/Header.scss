@@ -46,3 +46,9 @@
     opacity: 0.2;
   }
 }
+
+@media screen and (max-width: 765px){
+  .header {
+    padding: 18px 20px;
+  }
+}

@@ -19,7 +19,7 @@ import {selectCategories} from "../../features/categoriesSlice";
 import {deleteTask} from "../../features/tasksSlice";
 import {setActiveTask} from "../../features/tasksSlice";
 import axios from "axios";
-import TaskCreationModal from "../Tasks/TaskCreationModal";
+import TaskCreationModal from "../TasksModals/TaskCreationModal";
 
 const prioritiesIconsMap = {
     Neutral: neutralPriorityIcon,
@@ -46,7 +46,6 @@ function ActiveTask(props) {
     const handleClose = () => setOpen(false);
 
     useEffect(() => {
-        console.log(props.remindIn)
         categories.forEach((category) => {
             if (category.id === props.categoryId) {
                 handleCategoryName(category.name)
@@ -104,7 +103,6 @@ function ActiveTask(props) {
 
     return (
         <>
-
             <div className="active-task">
                 <div className="active-task__container">
                     <div className="active-task__header">
@@ -186,6 +184,12 @@ function ActiveTask(props) {
                                 </ul>
                             </div>
                         </div>
+                    </div>
+                    <p className="active-task__subtitle">Description:</p>
+                    <div className="active-task__info">
+                        <p className="active-task__description">
+                            {props.description}
+                        </p>
                     </div>
                 </div>
                 <div className="active-task__actions">

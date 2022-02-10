@@ -27,6 +27,7 @@
     font-weight: bold;
     font-size: 16px;
     line-height: 16px;
+    color: $bluedark-main;
   }
 
   &-photo-container {
@@ -41,6 +42,12 @@
     height: 84px;
     margin-right: 40px;
     border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &-photo-actions {
+    display: flex;
+    align-items: center;
   }
 
   &-photo-button {
@@ -109,6 +116,7 @@
     font-weight: bold;
     font-size: 16px;
     line-height: 16px;
+    color: $bluedark-main;
   }
 
   &-actions {
@@ -141,4 +149,63 @@
   top: 30px;
   right: 30px;
   cursor: pointer;
+}
+
+.user-modal__account-password-form {
+  margin-top: 25px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 1270px) {
+  .user-modal__account {
+    padding: 60px 30px 40px 30px;
+
+    &-actions {
+      bottom: 40px;
+      right: 30px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .user-modal__account {
+    padding: 22px 20px 110px 20px;
+
+    &-title {
+      margin-bottom: 28px;
+    }
+
+    &-photo-actions {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    &-photo-button {
+      padding: 8px 54.5px;
+    }
+
+    &-photo-container {
+      justify-content: space-between;
+    }
+
+    &-photo-info {
+      width: max-content;
+      top: -34px;
+      left: unset;
+      right: 0;
+    }
+
+    &-actions {
+      bottom: 26px;
+      right: 20px;
+    }
+
+    &-password-button {
+      margin-top: 16px;
+      width: 100%;
+    }
+
+
+  }
 }
