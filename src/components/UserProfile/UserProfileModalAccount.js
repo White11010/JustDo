@@ -5,11 +5,12 @@ import {useDispatch} from "react-redux";
 import {useForm} from "react-hook-form";
 import {useSelector} from "react-redux";
 import {selectUserData, setUserData} from "../../features/userSlice";
-import axios from "axios";
 import UserProfileFileUploader from "./UserProfileFileUploader";
 import closeIcon from "../../assets/images/bx-close.svg"
 import {useMediaQuery} from "react-responsive";
 import UserProfileModalSettings from "./UserProfileModalSettings";
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
 
 function UserProfileModalAccount(props) {
     const dispatch = useDispatch();
@@ -31,12 +32,15 @@ function UserProfileModalAccount(props) {
     const onSubmit = (data) => {
         handleUserUpdatedData(data)
         setFormData()
-        sendUserDataUpdated()
+        API.put(`users`, fd)
             .then(response => {
                 if (response.status === 200) {
                     dispatch(setUserData(response.data.data))
                     props.handleModalClose();
                 }
+            })
+            .catch(() => {
+                dispatch(setError(true))
             })
     };
 
@@ -47,25 +51,6 @@ function UserProfileModalAccount(props) {
             fd.append(key, userUpdatedData[key])
         }
         fd.append('image', image);
-    }
-
-    const sendUserDataUpdated = () => {
-        const token = localStorage.getItem('authorization');
-
-        return axios({
-            method: "put",
-            url: "http://34.125.5.252:3000/api/users",
-            headers: {'authorization': 'Bearer ' + token},
-            data: fd
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    return response;
-                }
-            })
-            .catch(error => {
-                throw error;
-            })
     }
 
     const isTablet = useMediaQuery({query: '(max-width: 1270px)'})
@@ -145,7 +130,7 @@ function UserProfileModalAccount(props) {
                                 } : {
                                     flexBasis: 'calc(50% - 12px)',
                                     marginBottom: '27px',
-                                    marginLeft: '12px'
+                                    marginRight: '12px'
                                 })
                             }
                         />
@@ -163,7 +148,7 @@ function UserProfileModalAccount(props) {
                                 } : {
                                     flexBasis: 'calc(50% - 12px)',
                                     marginBottom: '30px',
-                                    marginRight: '12px'
+                                    marginLeft  : '12px'
                                 }
                             }
                         />

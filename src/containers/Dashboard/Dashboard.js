@@ -17,72 +17,40 @@ import Tasks from "../Tasks/Tasks";
 import ActiveTask from "../../components/ActiveTask/ActiveTask";
 import logoIcon from '../../assets/images/logo-icon.svg'
 import burgerIcon from '../../assets/images/bx-menu-alt-left.svg'
-import {selectCategories, setCategories} from "../../features/categoriesSlice";
+import {setCategories} from "../../features/categoriesSlice";
+import {selectIsError, setError} from "../../features/errorsSlice";
+import ErrorModal from "../../components/Notifications/ErrorModal";
+import API from '../../api'
 
 
 function Dashboard(props) {
 
+    const isError = useSelector(selectIsError)
+
     const dispatch = useDispatch()
 
     const activeTask = useSelector(selectActiveTask);
+
     const handleCloseActiveTask = () => {
         dispatch(setActiveTask(null))
     }
 
     const tags = useSelector(selectTags);
 
-    const getUserData = (token) => {
-        return axios({
-            method: "get",
-            url: "http://34.125.5.252:3000/api/users",
-            headers: {'authorization': 'Bearer ' + token}
-        })
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                throw error;
-            })
-    };
-
     useEffect(() => {
-        const token = localStorage.getItem('authorization');
-        if (token) {
-            getUserData(token)
-                .then(response => {
-                    dispatch(setUserData(response.data));
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }
-    }, [])
-
-    const getCategoriesFromApi = (token) => {
-        return axios({
-            method: "get",
-            url: "http://34.125.5.252:3000/api/categories",
-            headers: {'authorization': 'Bearer ' + token}
-        })
+        API.get(`/users`)
             .then(response => {
-                return response;
+                dispatch(setUserData(response.data));
             })
-            .catch(error => {
-                throw error;
+            .catch(() => {
+                dispatch(setError(true))
             })
-    }
-
-
-
-    useEffect(() => {
-        const token = localStorage.getItem('authorization');
-
-        getCategoriesFromApi(token)
+        API.get(`/categories`)
             .then(response => {
                 dispatch(setCategories(response.data))
             })
-            .catch(error => {
-                console.log(error)
+            .catch(() => {
+                dispatch(setError(true))
             })
     }, [])
 
@@ -183,6 +151,7 @@ function Dashboard(props) {
                     </>
                 }
             </div>
+            <ErrorModal open={isError} />
         </>
     );
 }

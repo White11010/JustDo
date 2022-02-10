@@ -2,7 +2,7 @@ import React, {forwardRef} from 'react';
 import './FormInput.scss';
 
 const FormInput = React.forwardRef(
-    ({name, type, label, placeholder, style, isError, errorText, value, ...restProps}, forwardRef) => {
+    ({name, type, label, placeholder, style, errorText, value, ...restProps}, forwardRef) => {
         return (
             <p className="form__input-container" style={style}>
                 <label
@@ -21,7 +21,7 @@ const FormInput = React.forwardRef(
                     defaultValue={value}
                 />
                 {
-                    isError && <span
+                    errorText && <span
                         className="form-validation-error-message"
                     >
                         {errorText}

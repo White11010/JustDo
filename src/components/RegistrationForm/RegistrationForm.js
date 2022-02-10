@@ -2,7 +2,10 @@ import * as React from 'react';
 import RegistrationFormFirst from "./RegistrationFormFirst";
 import RegistrationFormSecond from "./RegistrationFormSecond";
 import RegistrationFormThird from "./RegistrationFormThird";
-import axios from 'axios'
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
+import {useDispatch} from "react-redux";
+
 
 function RegistrationForm(props) {
     const [pageNumber, setPageNumber] = React.useState(1);
@@ -27,29 +30,22 @@ function RegistrationForm(props) {
         });
     }
 
-    const sendRegistrationData = () => {
 
-        return axios({
-            method: "post",
-            url: "http://34.125.5.252:3000/api/auth/register",
-            data: fd
-        })
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                throw error;
-            })
-    };
+    const dispatch = useDispatch();
 
     const onSubmit = () => {
       setFormData();
         console.log(registrationData)
-      sendRegistrationData()
-          .then(response => console.log(response))
-          .catch(error => console.log(error.response));
+        API.post(`auth/register`, fd)
+            .then(response => {
+                if (response.status === 201) {
+                    props.handleLogin()
+                }
+            })
+            .catch(() => {
+                dispatch(setError(true))
+            })
     }
-
 
     return (
         <>

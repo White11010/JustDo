@@ -4,7 +4,6 @@ import {useForm} from "react-hook-form";
 import FormInput from "../FormInputs/FormInput";
 import TaskTextarea from "../TasksInputs/TaskTextarea";
 import DateAndTimePicker from "../FormInputs/DateAndTimePicker";
-import axios from "axios";
 import {useSelector} from "react-redux";
 import {selectCategories} from "../../features/categoriesSlice";
 import {selectActiveCategory} from "../../features/categoriesSlice";
@@ -19,6 +18,8 @@ import {useMediaQuery} from "react-responsive";
 import arrowIcon from "../../assets/images/bx-chevron-left.svg";
 import arrowIconWhite from "../../assets/images/bx-chevron-left-white.svg";
 import plusIcon from '../../assets/images/bx-plus.svg'
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
 
 function TaskCreationForm(props) {
 
@@ -29,8 +30,6 @@ function TaskCreationForm(props) {
     const {register, handleSubmit, formState} = useForm({mode: "onChange"});
 
     const categories = useSelector(selectCategories);
-
-    const activeCategory = useSelector(selectActiveCategory)
 
     const [taskData, setTaskData] = React.useState({status: 'queued'});
 
@@ -46,24 +45,6 @@ function TaskCreationForm(props) {
         props.handleCose()
     }
 
-    const sendTaskData = () => {
-        const token = localStorage.getItem('authorization');
-
-        console.log(taskData)
-
-        return axios({
-            method: "post",
-            url: "http://34.125.5.252:3000/api/tasks",
-            data: taskData,
-            headers: {'authorization': 'Bearer ' + token}
-        })
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                throw error;
-            })
-    }
 
 
     const onSubmit = (data) => {
@@ -73,7 +54,8 @@ function TaskCreationForm(props) {
         // handleTaskData({remindAt: notificationDate})
         handleTaskData({deadline: "2022-02-07T16:01:00.000Z"})
         handleTaskData({remindAt: "2022-02-07T15:56:00.000Z"})
-        sendTaskData()
+
+        API.post(`/tasks`, taskData)
             .then((response) => {
                 console.log(response)
                 if (response.status === 201) {
@@ -81,7 +63,9 @@ function TaskCreationForm(props) {
                     props.handleCose();
                 }
             })
-            .catch(error => console.log(error.response))
+            .catch(() => {
+                dispatch(setError(true))
+            })
     };
 
     const isTablet = useMediaQuery({query: '(max-width: 1270px)'})

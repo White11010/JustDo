@@ -15,6 +15,8 @@ import {selectSearch, selectSort} from "../../features/filtersSlice";
 import {useMediaQuery} from "react-responsive";
 import plusIcon from '../../assets/images/bx-plus.svg'
 import plusBlueIcon from '../../assets/images/bx-plus--blue.svg'
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
 
 const priorities = ['Important', 'Middle', 'Neutral', 'Low'];
 
@@ -104,30 +106,14 @@ function Tasks() {
 
 
     useEffect(() => {
-        const token = localStorage.getItem('authorization');
-        getTasksFromApi(token)
+        API.get(`tasks`)
             .then(response => {
                 dispatch(setTasks(response.data))
             })
-            .catch(error => {
-                console.log(error)
+            .catch(() => {
+                dispatch(setError(true))
             })
     }, [])
-
-    const getTasksFromApi = (token) => {
-        return axios({
-            method: "get",
-            url: "http://34.125.5.252:3000/api/tasks",
-            headers: {'authorization': 'Bearer ' + token}
-        })
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                throw error;
-            })
-        }
-
 
     const [modalOpen, setModalOpen] = React.useState(false);
     const handleModalOpen = () => setModalOpen(true);
@@ -137,7 +123,6 @@ function Tasks() {
     const arrowUpClassName = "groups__arrow-icon groups__arrow-icon--up"
 
     const isTablet = useMediaQuery({query: '(max-width: 1270px)'})
-    const isMobile = useMediaQuery({query: '(max-width: 768px)'})
 
     useEffect(() => {
         if (isTablet) {

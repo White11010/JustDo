@@ -1,11 +1,12 @@
 import React from 'react';
 import {useForm} from "react-hook-form";
 import "./LoginForm.scss";
-import axios from "axios";
 import FormInput from "../FormInputs/FormInput";
 import {useNavigate} from "react-router";
 import {useDispatch} from "react-redux";
 import {setAuth} from "../../features/userSlice";
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
 
 function LoginFormLink(props) {
     return (
@@ -24,28 +25,16 @@ function LoginForm(props) {
 
     const { register, handleSubmit, formState } = useForm({ mode: "onChange" });
 
-    const sendLoginData = (data) => {
-        return axios({
-            method: "post",
-            url: "http://34.125.5.252:3000/api/auth/login",
-            data: data
-        })
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                throw error;
-            })
-    };
-
     const onSubmit = (data) => {
-        sendLoginData(data)
+        API.post(`auth/login`, data)
             .then(response => {
                 localStorage.setItem('authorization', response.data.token);
                 dispatch(setAuth(true));
                 navigate('/dashboard');
             })
-            .catch(error => console.log(error.response))
+            .catch(() => {
+                dispatch(setError(true))
+            })
     };
 
 

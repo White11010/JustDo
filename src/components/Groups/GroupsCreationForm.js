@@ -3,9 +3,10 @@ import './GroupsCreationForm.scss'
 import FormInput from "../FormInputs/FormInput";
 import closeIcon from '../../assets/images/bx-close.svg'
 import {useForm} from "react-hook-form";
-import axios from "axios";
 import {useDispatch} from "react-redux";
 import {addGroup} from "../../features/groupsSlice";
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
 
 function GroupsCreationForm(props) {
 
@@ -13,33 +14,17 @@ function GroupsCreationForm(props) {
 
     const {register, handleSubmit} = useForm({mode: "onChange"});
 
-    const sendGroupData = (data) => {
-        const token = localStorage.getItem('authorization');
-
-        return axios({
-            method: "post",
-            url: "http://34.125.5.252:3000/api/groups",
-            headers: {'authorization': 'Bearer ' + token},
-            data: data
-        })
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                throw error;
-            })
-    }
 
     const onSubmit = (data) => {
-        sendGroupData(data)
+        API.post(`/groups`, data)
             .then(response => {
                 if (response.status === 201) {
                     dispatch(addGroup(response.data.data))
                     props.handleModalClose();
                 }
             })
-            .catch(error => {
-                console.log(error)
+            .catch(() => {
+                dispatch(setError(true))
             })
     }
 

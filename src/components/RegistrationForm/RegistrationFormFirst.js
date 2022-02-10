@@ -3,7 +3,9 @@ import { useForm, Controller } from "react-hook-form";
 import RegistrationDots from "./RegistrationDots";
 import './RegistrationForm.scss';
 import FormInput from "../FormInputs/FormInput";
-import axios from "axios";
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
+import {useDispatch} from "react-redux";
 
 function RegistrationFormLink(props) {
     return (
@@ -26,32 +28,30 @@ function RegistrationAgreement() {
 }
 
 function RegistrationFormFirst(props) {
-    const { register, handleSubmit, formState } = useForm({ mode: "onChange" });
+
+    const dispatch = useDispatch()
+
+    const [isEmailUnique, setIsEmailUnique] = React.useState(true)
+    const handleEmail = () => setIsEmailUnique(false)
+
+    const { register, handleSubmit, errors, formState } = useForm({ mode: "onChange" });
+
     const onSubmit = data => {
         props.addRegistrationData(data);
-        sendRegistrationData(data)
+
+        API.post(`auth/checkEmail`, data)
             .then((response) => {
-                console.log(response.status)
                 if (response.status === 200) {
                     props.handleNextPage();
                 }
             })
-            .catch(error => console.log(error.response));
-    };
-
-    const sendRegistrationData = (data) => {
-
-        return axios({
-            method: "post",
-            url: "http://34.125.5.252:3000/api/auth/checkemail",
-            data: data
-        })
-            .then(response => {
-                return response;
-            })
             .catch(error => {
-                throw error;
-            })
+                if (error.response.status === 400) {
+                    handleEmail();
+                } else {
+                    dispatch(setError(true))
+                }
+            });
     };
 
     return (
@@ -67,6 +67,7 @@ function RegistrationFormFirst(props) {
                     label="E-Mail"
                     placeholder="Enter your E-Mail"
                     style={{marginBottom: '37px'}}
+                    errorText={!isEmailUnique &&  'The email already exists' ||  errors.email?.type === "pattern" && 'Enter a valid email' || errors.email?.type === "required" && 'Email is required'}
                 />
                 <div className="registration__buttons">
                     <button type="submit" className="button button--primary registration__next-button" disabled={!formState.isValid}>Next</button>

@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
-import axios from "axios";
 import {useSelector} from "react-redux";
-import {selectIsAuth, setAuth} from "../../features/userSlice";
+import {setAuth} from "../../features/userSlice";
 import {selectUserData} from "../../features/userSlice";
 import {useDispatch} from "react-redux";
 import {setUserData} from "../../features/userSlice";
@@ -9,15 +8,14 @@ import './UserProfile.scss'
 import UserProfileMenu from "./UserProfileMenu";
 import {useNavigate} from "react-router";
 import UserProfileModal from "./UserProfileModal";
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
 
 
-function UserProfile(props) {
+function UserProfile() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-
-    const isAuth = useSelector(selectIsAuth);
 
     const userData = useSelector(selectUserData);
 
@@ -42,32 +40,15 @@ function UserProfile(props) {
         dispatch(setAuth(false))
     }
 
-
-    const getUserData = (token) => {
-        return axios({
-            method: "get",
-            url: "http://34.125.5.252:3000/api/users",
-            headers: {'authorization': 'Bearer ' + token}
-        })
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                throw error;
-            })
-    };
-
     useEffect(() => {
-        const token = localStorage.getItem('authorization');
-        if (token) {
-            getUserData(token)
-                .then(response => {
-                    dispatch(setUserData(response.data));
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }
+        API.get(`/users`)
+            .then(response => {
+                dispatch(setUserData(response.data));
+            })
+            .catch(() => {
+                dispatch(setError(true))
+            })
+
     }, [])
 
 
