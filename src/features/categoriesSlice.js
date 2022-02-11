@@ -17,7 +17,7 @@ const categoriesSlice = createSlice({
         },
         updateCategory: (state, action) => {
             const categoryIndex = state.categories.findIndex(category => {return category.id === action.payload.id})
-            state.tasks[categoryIndex] = action.payload;
+            state.categories[categoryIndex] = action.payload;
         },
         deleteCategory: (state, action) => {
             state.categories.splice(state.categories.findIndex(category => {

@@ -30,6 +30,12 @@
     color: $bluedark-main;
   }
 
+  &-photo-wrapper {
+    width: 84px;
+    height: 84px;
+    margin-right: 40px;
+  }
+
   &-photo-container {
     position: relative;
     display: flex;
@@ -38,9 +44,8 @@
   }
 
   &-photo {
-    width: 84px;
-    height: 84px;
-    margin-right: 40px;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     object-fit: cover;
   }

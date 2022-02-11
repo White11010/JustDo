@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
 import './Dashboard.scss';
 import { io } from "socket.io-client";
-import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
-import {selectActiveTask, setActiveTask} from "../../features/tasksSlice";
+import {selectActiveTask, selectTasks, setActiveTask} from "../../features/tasksSlice";
 import {selectTags} from "../../features/tagsSlice";
 import {selectUserData, setUserData} from "../../features/userSlice";
 import {useMediaQuery} from "react-responsive";
@@ -21,15 +20,18 @@ import {setCategories} from "../../features/categoriesSlice";
 import {selectIsError, setError} from "../../features/errorsSlice";
 import ErrorModal from "../../components/Notifications/ErrorModal";
 import API from '../../api'
+import NotificationModal from "../../components/Notifications/NotificationModal";
 
 
-function Dashboard(props) {
+function Dashboard() {
 
     const isError = useSelector(selectIsError)
 
     const dispatch = useDispatch()
 
     const activeTask = useSelector(selectActiveTask);
+
+    const tasks = useSelector(selectTasks)
 
     const handleCloseActiveTask = () => {
         dispatch(setActiveTask(null))
@@ -58,12 +60,15 @@ function Dashboard(props) {
 
     useEffect(() => {
         if (userData !== null) {
-            const socket = io("http://34.125.5.252:3000/api/websockets?id=" + userData.id)
-            socket.on("connect", () => {
-                console.log("Connected!")
+            const socket = io(process.env.REACT_APP_API_URL + "/websockets?id=" + userData.id)
+            socket.on('connect', () => {
+                console.log('coonect')
+            })
+            socket.on('disconnect', () => {
+                console.log('disconnect')
             })
             socket.on("reminder", (data) => {
-                console.log(data)
+                handleNotificationId(data)
             })
             socket.on("expired", (data) => {
                 console.log(data)
@@ -71,10 +76,25 @@ function Dashboard(props) {
         }
     }, [userData])
 
+    const [notificationId, setNotificationId] = React.useState(null);
+    const handleNotificationId = (id) => setNotificationId(id);
+    const [notificationData, setNotificationData] = React.useState(null)
+    const handleNotificationData = (data) => setNotificationData(data)
+
+    useEffect(() => {
+        if (notificationId !== null) {
+            const task = tasks.find(task => {
+                return task.id === notificationId
+            })
+            handleNotificationData(task)
+        } else {
+            handleNotificationData(null)
+        }
+    }, [notificationId])
+
 
 
     const isTablet = useMediaQuery({query: '(max-width: 1270px)'})
-    const isMobile = useMediaQuery({query: '(max-width: 768px)'})
 
     const [openSidebarLeft, setOpenSidebarLeft] = React.useState(!isTablet)
     const handleSidebarLeftOpen = () => setOpenSidebarLeft(true)
@@ -141,7 +161,7 @@ function Dashboard(props) {
                                 priority={activeTask.priority}
                                 categoryId={activeTask.categoryId}
                                 deadline={activeTask.deadline}
-                                createdIn={activeTask.createdIn}
+                                createdAt={activeTask.createdAt}
                                 remindAt={activeTask.remindAt}
                                 tags={activeTask.tags}
                                 description={activeTask.description}
@@ -151,7 +171,17 @@ function Dashboard(props) {
                     </>
                 }
             </div>
-            <ErrorModal open={isError} />
+            <ErrorModal open={isError}/>
+            {
+                (notificationData !== null) &&
+                <NotificationModal
+                    open={true}
+                    notificationData={notificationData}
+                    userData={userData}
+                    handleNotificationId={handleNotificationId}
+                />
+            }
+
         </>
     );
 }

@@ -8,6 +8,8 @@ import logoSuccessed from '../../assets/images/logo.Success.svg'
 import axios from "axios";
 import {deleteTask, selectTasks, setActiveTask} from "../../features/tasksSlice";
 import {useDispatch, useSelector} from "react-redux";
+import API from '../../api'
+import {setError} from "../../features/errorsSlice";
 
 const style = {
     position: 'absolute',
@@ -27,34 +29,17 @@ function TaskCompeteModal(props) {
     const [isCompleting, setIsCompleting] = React.useState(true)
     const handleCompleting = () => setIsCompleting(false)
 
-    const sendDeleteTask = () => {
-        const token = localStorage.getItem('authorization');
-
-        return axios({
-            method: "delete",
-            url: "http://34.125.5.252:3000/api/tasks",
-            headers: {'authorization': 'Bearer ' + token},
-            data: {id: props.id}
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    return response;
-                }
-            })
-            .catch(error => {
-                throw error;
-            })
-    }
-
     const handleComplete = () => {
-        sendDeleteTask()
+        const data = {}
+        data.id = props.id
+        API.delete(`/tasks`, {data})
             .then(res => {
                 if (res.status === 200) {
                     dispatch(deleteTask(props.id))
                 }
             })
-            .catch(error => {
-                console.log(error)
+            .catch(() => {
+                dispatch(setError(true))
             })
     }
 

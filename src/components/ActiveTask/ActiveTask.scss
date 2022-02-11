@@ -21,8 +21,6 @@
 
 .active-task__title {
   margin-left: 10px;
-  font-family: 'Circe';
-  font-style: normal;
   font-weight: 800;
   font-size: 24px;
   line-height: 24px;
@@ -31,8 +29,6 @@
 
 .active-task__subtitle {
   margin-bottom: 18px;
-  font-family: 'Circe';
-  font-style: normal;
   font-weight: bold;
   font-size: 18px;
   line-height: 120%;
@@ -60,8 +56,6 @@
 
 .active-task__info-title {
   margin-bottom: 4px;
-  font-family: 'Circe';
-  font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
@@ -84,8 +78,6 @@
 
 .active-task__info-data {
   margin-left: 10px;
-  font-family: Circe;
-  font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
@@ -96,9 +88,6 @@
 .active-task__info-hashtag-list {
   display: flex;
   flex-wrap: wrap;
-
-  font-family: Circe;
-  font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
@@ -114,8 +103,6 @@
 }
 
 .active-task__description {
-  font-family: 'Circe';
-  font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
@@ -127,8 +114,6 @@
   justify-self: flex-end;
   display: flex;
   justify-content: space-between;
-  font-family: Circe;
-  font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;

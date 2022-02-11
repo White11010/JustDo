@@ -33,8 +33,6 @@
   padding: 13px 12px;
   box-shadow: 3px 4px 15px rgba(44, 45, 67, 0.09);
   border-radius: 10px;
-  font-family: 'Circe';
-  font-style: normal;
   font-weight: normal;
   font-size: 18px;
   line-height: 120%;
@@ -64,8 +62,6 @@
 
 .tasks__sort-title {
   margin-left: 10px;
-  font-family: Circe;
-  font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
@@ -74,7 +70,6 @@
 
 .tasks__sort-arrow {
   margin-left: auto;
-  //transform: rotate(90deg);
 }
 
 .tasks__sort-select {
@@ -97,8 +92,6 @@
   align-items: center;
   box-sizing: border-box;
   padding: 10px 0 10px 20px;
-  font-family: 'Circe';
-  font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;

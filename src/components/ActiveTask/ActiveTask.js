@@ -55,7 +55,6 @@ function ActiveTask(props) {
         })
     })
 
-
     const categories = useSelector(selectCategories);
 
     const [categoryIcon, setCategoryIcon] = React.useState(null);
@@ -64,9 +63,9 @@ function ActiveTask(props) {
     const [categoryName, setCategoryName] = React.useState(null)
     const handleCategoryName = (name) => setCategoryName(name)
 
-    const deadline = moment(props.deadline).utc().format('MMM DD, HH:MM a')
-    const dateOfCreation = moment(props.createdIn).utc().format('MMM DD,  HH:MM a')
-    const dateOfNotification =  moment(props.remindAt).utc().format('MMM DD, HH:MM a')
+    const deadline = moment(props.deadline).format('MMM DD') + ', ' + (props.deadline.split('T')[1].split(':')[0] > 11 ? (props.deadline.split('T')[1].split(':')[0] - 12) : props.deadline.split('T')[1].split(':')[0]) + ':' + props.deadline.split('T')[1].split(':')[1] + (props.deadline.split('T')[1].split(':')[0] > 11 ? ' pm' : ' am')
+    const dateOfCreation = moment(props.createdAt).format('MMM DD') + ', ' + (props.createdAt.split('T')[1].split(':')[0] > 11 ? (props.createdAt.split('T')[1].split(':')[0] - 12) : props.createdAt.split('T')[1].split(':')[0]) + ':' + props.createdAt.split('T')[1].split(':')[1] + (props.createdAt.split('T')[1].split(':')[0] > 11 ? ' pm' : ' am')
+    const dateOfNotification =  moment(props.remindAt).format('MMM DD') + ', ' + (props.remindAt.split('T')[1].split(':')[0] > 11 ? (props.remindAt.split('T')[1].split(':')[0] - 12) : props.remindAt.split('T')[1].split(':')[0]) + ':' + props.remindAt.split('T')[1].split(':')[1] + (props.remindAt.split('T')[1].split(':')[0] > 11 ? ' pm' : ' am')
 
     const handleDeleteTask = () => {
         const data = {}

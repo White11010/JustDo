@@ -10,6 +10,8 @@ import {useNavigate} from "react-router";
 import UserProfileModal from "./UserProfileModal";
 import API from '../../api'
 import {setError} from "../../features/errorsSlice";
+import UserProfileAvatarPlaceholder from "./UserProfileAvatarPlaceholder";
+
 
 
 function UserProfile() {
@@ -57,11 +59,18 @@ function UserProfile() {
             <div className="user-profile" onClick={handleToggleOpen}>
                 {userData &&
                     <div className="user-profile__avatar-wrapper">
-                        <img
-                            className="user-profile__avatar"
-                            src={'http://34.125.5.252:3000/api/' + userData.avatarUrl}
-                            alt="user-avatar"
-                        />
+                        {
+                            userData.avatarUrl === null ?
+                                <UserProfileAvatarPlaceholder
+                                    firstName={userData.firstName}
+                                    lastName={userData.lastName}
+                                /> :
+                                <img
+                                    className="user-profile__avatar"
+                                    src={process.env.REACT_APP_API_URL + '/' + userData.avatarUrl}
+                                    alt="user-avatar"
+                                />
+                        }
                     </div>
                 }
                 {
@@ -71,9 +80,11 @@ function UserProfile() {
                 {
                     open &&
                     <UserProfileMenu
+                        firstName={userData.firstName}
+                        lastName={userData.lastName}
                         name={userData.firstName + ' ' + userData.lastName[0] + '.'}
                         email={userData.email}
-                        avatarUrl={'http://34.125.5.252:3000/api/' + userData.avatarUrl}
+                        avatarUrl={userData.avatarUrl}
                         logOut={logOut}
                         handleModalOpen={handleModalOpen}
                     />

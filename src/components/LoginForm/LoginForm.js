@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useForm} from "react-hook-form";
 import "./LoginForm.scss";
 import FormInput from "../FormInputs/FormInput";
 import {useNavigate} from "react-router";
-import {useDispatch} from "react-redux";
-import {setAuth} from "../../features/userSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {selectIsAuth, setAuth} from "../../features/userSlice";
 import API from '../../api'
 import {setError} from "../../features/errorsSlice";
 
@@ -23,7 +23,12 @@ function LoginForm(props) {
 
     const navigate = useNavigate();
 
+    const isAuth = useSelector(selectIsAuth)
+
     const { register, handleSubmit, formState } = useForm({ mode: "onChange" });
+
+    const [loginError, setLoginError] = React.useState(false)
+    const handleSetError = () => setLoginError(true)
 
     const onSubmit = (data) => {
         API.post(`auth/login`, data)
@@ -32,10 +37,20 @@ function LoginForm(props) {
                 dispatch(setAuth(true));
                 navigate('/dashboard');
             })
-            .catch(() => {
-                dispatch(setError(true))
+            .catch((error) => {
+                if (error.response.status === 400) {
+                    handleSetError();
+                } else {
+                    dispatch(setError(true))
+                }
             })
     };
+
+    useEffect(() => {
+        if (isAuth) {
+            navigate('/dashboard');
+        }
+    }, [isAuth])
 
 
     return (
@@ -50,6 +65,7 @@ function LoginForm(props) {
                     label="E-Mail"
                     placeholder="Enter your E-Mail"
                     style={{marginBottom: '37px'}}
+                    errorText={loginError && 'Email or password is incorrect!'}
                 />
                 <FormInput
                     ref={register({ required: true })}

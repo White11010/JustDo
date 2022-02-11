@@ -3,13 +3,23 @@ import "./UserProfileMenu.scss"
 import settingsIcon from "../../assets/images/bx-settings.svg"
 import bellIcon from "../../assets/images/bx-bell.svg"
 import logoutIcon from "../../assets/images/bx-log-out.svg"
+import UserProfileAvatarPlaceholder from "./UserProfileAvatarPlaceholder";
 
 
 function UserProfileMenu(props) {
     return (
         <div className="user-menu">
             <div className="user-menu__data-container">
-                <img src={props.avatarUrl} alt="user avatar" className="user-menu__avatar"/>
+                <div className="user-menu__avatar-container">
+                    {
+                        props.avatarUrl === null ?
+                            <UserProfileAvatarPlaceholder
+                                firstName={props.firstName}
+                                lastName={props.lastName}
+                            /> :
+                            <img src={process.env.REACT_APP_API_URL + '/' + props.avatarUrl} alt="user avatar" className="user-menu__avatar"/>
+                    }
+                </div>
                 <div className="user-menu__data">
                     <p className="user-menu__name">{props.name}</p>
                     <p className="user-menu__email">{props.email}</p>

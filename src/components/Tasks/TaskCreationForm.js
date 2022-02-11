@@ -51,13 +51,10 @@ function TaskCreationForm(props) {
         const notificationToMinutes = moment(taskData.remindAt, "HH:mm:ss").diff(moment().startOf('day'), 'minutes');
         const notificationDate = moment(taskData.deadline).subtract(notificationToMinutes, 'minutes').utc().toISOString()
         handleTaskData(data);
-        // handleTaskData({remindAt: notificationDate})
-        handleTaskData({deadline: "2022-02-07T16:01:00.000Z"})
-        handleTaskData({remindAt: "2022-02-07T15:56:00.000Z"})
+        handleTaskData({remindAt: notificationDate})
 
         API.post(`/tasks`, taskData)
             .then((response) => {
-                console.log(response)
                 if (response.status === 201) {
                     dispatch(addTask(response.data.data))
                     props.handleCose();
