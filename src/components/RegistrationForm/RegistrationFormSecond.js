@@ -17,10 +17,16 @@ function RegistrationFormSecond(props) {
     const password = useRef({});
     password.current = watch("password");
 
-    const onSubmit = data => {
+    const onSubmit = (data) => {
         props.addRegistrationData({password: data.password});
         props.handleNextPage();
     };
+
+    const handleBack = (event) => {
+        event.preventDefault();
+        props.handlePrevPage();
+        handleClick()
+    }
 
 
     return (
@@ -55,14 +61,14 @@ function RegistrationFormSecond(props) {
                     errorText={errors.password_confirmation && "The passwords do not match"}
                 />
                 <div className="registration__buttons">
+                    <button type="submit" className="button button--primary registration__next-button" disabled={!formState.isValid}>Next</button>
                     <button
                         className="button modal__back-button"
-                        onClick={() => {props.handlePrevPage(); handleClick()}}
+                        onClick={handleBack}
                         onMouseOver={handleMouseOver}
                         onMouseOut={handleMouseOut}
                         style={{ backgroundImage: `url(${bgImage})` }}
                     />
-                    <button type="submit" className="button button--primary registration__next-button" disabled={!formState.isValid}>Next</button>
                 </div>
             </form>
         </div>

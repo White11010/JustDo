@@ -18,18 +18,21 @@
     margin-bottom: 12px;
   }
 
-  &__avatar {
+  &__avatar-container {
     width: 44px;
     height: 44px;
     margin-right: 10px;
+  }
+
+  &__avatar {
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     object-fit: cover;
   }
 
 
   &__name {
-    font-family: 'Circe';
-    font-style: normal;
     font-weight: normal;
     font-size: 18px;
     line-height: 120%;
@@ -37,8 +40,6 @@
   }
 
   &__email {
-    font-family: 'Circe';
-    font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 24px;
@@ -70,8 +71,6 @@
   }
 
   &__action {
-    font-family: 'Circe';
-    font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 24px;

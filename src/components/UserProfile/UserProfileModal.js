@@ -1,10 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import './UserProfileModal.scss'
 import UserProfileModalSettings from "./UserProfileModalSettings";
 import UserProfileModalAccount from "./UserProfileModalAccount";
-import axios from "axios";
 import {useMediaQuery} from "react-responsive";
 import API from '../../api'
 import {setError} from "../../features/errorsSlice";

@@ -7,38 +7,26 @@ import {useNavigate} from "react-router";
 import axios from "axios";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import {useDispatch} from "react-redux";
-import {setAuth} from "./features/userSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {selectIsAuth, setAuth} from "./features/userSlice";
 import AuthGuard from "./services/AuthGuard";
+import API from './api'
 
 function App() {
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
-    const getUserData = (token) => {
-        return axios({
-            method: "get",
-            url: "http://34.125.5.252:3000/api/users",
-            headers: {'authorization': 'Bearer ' + token}
-        })
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                throw error;
-            })
-    };
+    const isAuth = useSelector(selectIsAuth)
 
     useEffect(() => {
         document.title = 'JustDo'
 
         const token = localStorage.getItem('authorization');
         if (token) {
-            getUserData(token)
+            API.get(`users`)
                 .then(response => {
                     if (response.status === 200) {
                         dispatch(setAuth(true))
-                        navigate('/dashboard')
                     }
                 })
                 .catch(error => {
@@ -46,6 +34,12 @@ function App() {
                 })
         }
     }, [])
+
+    useEffect(() => {
+        if (isAuth) {
+            navigate('/dashboard')
+        }
+    }, [isAuth])
 
     return (
         <div className="App">

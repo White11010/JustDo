@@ -33,10 +33,17 @@ function RegistrationFormThird(props) {
     const handleClick = () => setBgImage(arrowIconWhite)
 
     const { register, handleSubmit, watch, errors, formState } = useForm({ mode: "onChange" });
-    const onSubmit = data => {
+    const onSubmit = (data, event) => {
+        event.preventDefault();
         props.addRegistrationData(data);
         props.onSubmit();
     };
+
+    const handleBack = (event) => {
+        event.preventDefault();
+        props.handlePrevPage();
+        handleClick()
+    }
 
     return (
         <div className="registration">
@@ -63,14 +70,14 @@ function RegistrationFormThird(props) {
                 />
                 <FileUploader  handleAddImage={props.handleAddImage}/>
                 <div className="registration__buttons">
+                    <button type="submit" className="button button--primary registration__next-button" disabled={!formState.isValid}>Start</button>
                     <button
                         className="button modal__back-button"
-                        onClick={() => {props.handlePrevPage(); handleClick()}}
+                        onClick={handleBack}
                         onMouseOver={handleMouseOver}
                         onMouseOut={handleMouseOut}
                         style={{ backgroundImage: `url(${bgImage})` }}
                     />
-                    <button type="submit" className="button button--primary registration__next-button" disabled={!formState.isValid}>Start</button>
                 </div>
             </form>
         </div>

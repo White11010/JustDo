@@ -1,6 +1,7 @@
 .user-modal__file-uploader {
   position: relative;
   margin-right: 16px;
+  cursor: pointer;
 }
 
 .user-modal__file-uploader-input {
@@ -11,8 +12,6 @@
 
 .user-modal__file-uploader-button {
   padding: 8px 22px;
-  font-family: Circe;
-  font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;

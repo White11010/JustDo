@@ -35,7 +35,6 @@ function RegistrationForm(props) {
 
     const onSubmit = () => {
       setFormData();
-        console.log(registrationData)
         API.post(`auth/register`, fd)
             .then(response => {
                 if (response.status === 201) {

@@ -13,7 +13,6 @@
 }
 
 .registration__title {
-  font-family: 'Circe';
   margin-top: 30px;
   color: $bluedark-main;
   font-weight: 800;
@@ -33,8 +32,6 @@
   box-shadow: 3px 4px 15px rgba(44, 45, 67, 0.09);
   background-color: white;
   z-index: 999;
-  font-family: 'Circe';
-  font-style: normal;
   font-weight: normal;
   font-size: 12px;
   line-height: 18px;
@@ -54,6 +51,7 @@
 
 .registration__buttons {
   display: flex;
+  flex-direction: row-reverse;
 }
 
 .registration__next-button {
@@ -63,7 +61,6 @@
   flex: 1;
   height: 50px;
   color: white;
-  font-family: 'Circe';
   font-weight: bold;
   font-size: 18px;
   line-height: 27px;
@@ -71,7 +68,6 @@
 
 .registration__agreement {
   margin-top: 30px;
-  font-family: 'Circe';
   font-weight: normal;
   font-size: 12px;
   line-height: 18px;
@@ -88,7 +84,6 @@
 .registration__link {
   margin-top: 18px;
   margin-bottom: 30px;
-  font-family: 'Circe';
   font-size: 18px;
   line-height: 120%;
 }
@@ -121,8 +116,6 @@
 
 .dropzone__title {
   margin-top: 10px;
-  font-family: 'Circe';
-  font-style: normal;
   font-weight: normal;
   font-size: 18px;
   line-height: 120%;
@@ -134,8 +127,6 @@
 }
 .dropzone__info {
   margin-top: 2px;
-  font-family: 'Circe';
-  font-style: normal;
   font-weight: normal;
   font-size: 12px;
   line-height: 18px;
@@ -155,8 +146,6 @@
   position: absolute;
   left: 21px;
   top: -9px;
-  font-family: 'Circe';
-  font-style: normal;
   font-weight: normal;
   font-size: 12px;
   line-height: 18px;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import "./UserProfileModalAccount.scss"
 import FormInput from "../FormInputs/FormInput";
 import {useDispatch} from "react-redux";
@@ -11,6 +11,7 @@ import {useMediaQuery} from "react-responsive";
 import UserProfileModalSettings from "./UserProfileModalSettings";
 import API from '../../api'
 import {setError} from "../../features/errorsSlice";
+import UserProfileAvatarPlaceholder from "./UserProfileAvatarPlaceholder";
 
 function UserProfileModalAccount(props) {
     const dispatch = useDispatch();
@@ -22,11 +23,14 @@ function UserProfileModalAccount(props) {
 
     const [image, setImage] = React.useState(null);
     const handleAddImage = (imageData) => setImage(imageData);
+    const handleDeleteImage = () => setImage(null)
 
     const [passwordOpen, setPasswordOpen] = React.useState(false)
     const handlePasswordOpen = () => setPasswordOpen(true)
 
-    const {register, handleSubmit} = useForm({mode: "onChange"});
+    const {register, handleSubmit, watch, errors} = useForm({mode: "onChange"});
+    const password = useRef({});
+    password.current = watch("newPassword");
 
 
     const onSubmit = (data) => {
@@ -39,7 +43,8 @@ function UserProfileModalAccount(props) {
                     props.handleModalClose();
                 }
             })
-            .catch(() => {
+            .catch((error) => {
+                console.log(error)
                 dispatch(setError(true))
             })
     };
@@ -69,17 +74,27 @@ function UserProfileModalAccount(props) {
                 {
                     userData &&
                     <div className="user-modal__account-photo-container">
-                        <img
-                            src={'http://34.125.5.252:3000/api/' + userData.avatarUrl}
-                            alt="user avatar"
-                            className="user-modal__account-photo"
-                        />
+                        <div className="user-modal__account-photo-wrapper">
+                            {
+                                userData.avatarUrl === null ?
+                                    <UserProfileAvatarPlaceholder
+                                        firstName={userData.firstName}
+                                        lastName={userData.lastName}
+                                    /> :
+                                    <img
+                                        src={process.env.REACT_APP_API_URL + '/' + userData.avatarUrl}
+                                        alt="user avatar"
+                                        className="user-modal__account-photo"
+                                    />
+                            }
+                        </div>
                         <div className="user-modal__account-photo-actions">
                             <UserProfileFileUploader
                                 onFileSelect={handleAddImage}
                             />
                             <button
                                 className="button button--cancel user-modal__account-photo-button"
+                                onClick={handleDeleteImage}
                             >
                                 Delete
                             </button>
@@ -157,7 +172,7 @@ function UserProfileModalAccount(props) {
                                     onClick={props.handleModalClose}>Cancel
                             </button>
                             <button className="button button--primary user-modal__account-update-button"
-                                    type="submit">Update
+                                   onClick={handleSubmit(onSubmit)}>Update
                             </button>
                         </div>
 
@@ -189,7 +204,7 @@ function UserProfileModalAccount(props) {
                                         }
                                     />
                                     <FormInput
-                                        ref={register({required: true})}
+                                        ref={register({ required: true, minLength: 8,  pattern:/[A-Z{2,}](?=.*[0-9])(?=.*[^0-9a-zA-Z])/g, })}
                                         name="newPassword"
                                         type="password"
                                         label="New Password"
@@ -209,10 +224,11 @@ function UserProfileModalAccount(props) {
                                             })
 
                                         }
+                                        errorText={errors.newPassword?.type === "pattern" && 'Enter a valid password' || errors.newPassword?.type === "minLength" && 'Password should be 8 symbols at lest' }
                                     />
                                     <FormInput
-                                        ref={register({required: true})}
-                                        name="confirmPassword"
+                                        ref={register({ validate: value => value === password.current})}
+                                        name="password_confirmation"
                                         type="password"
                                         label="Confirm Password"
                                         placeholder="Confirm new password"
@@ -229,6 +245,7 @@ function UserProfileModalAccount(props) {
                                                 marginBottom: '27px',
                                             })
                                         }
+                                        errorText={errors.password_confirmation && "The passwords do not match"}
                                     />
                                 </form>
                                 :
@@ -236,7 +253,6 @@ function UserProfileModalAccount(props) {
                                     Change password
                                 </button>
                         }
-
                     </div>
                 }
                 <div className="user-modal__account-line"/>

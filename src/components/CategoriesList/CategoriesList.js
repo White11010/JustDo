@@ -56,7 +56,7 @@ function CategoriesList() {
         }
     }
     const handleCategoryLeaved = (event) => {
-        if (event.relatedTarget.attributes.id === undefined || event.target.attributes.id.value !== event.relatedTarget.attributes.id.value) {
+        if (event.type === "mouseout" && (event.relatedTarget.attributes.id === undefined || event.target.attributes.id.value !== event.relatedTarget.attributes.id.value)) {
             setCategoriesHovered({...categoriesHovered, ...{[event.target.closest(".categories__item").attributes.id.value]: false}});
         }
     }
@@ -111,6 +111,7 @@ function CategoriesList() {
 
     const onUpdateSubmit = (event) => {
         if (event.code === 'Enter' || event.type === 'blur') {
+            handleCategoryUpdated(event);
             if (event.target.value !== '') {
                 const data = {}
                 data.name = event.target.value;
@@ -194,14 +195,20 @@ function CategoriesList() {
                                 onClick={handleActiveCategory}
                             >
                                 {
-                                    item.icon !== null &&
-                                    <img src={categoriesIconsMap[item.icon]} alt={categoriesIconsMap[item.icon]}
-                                         className="categories__icon" id={item.id}/>
+                                    item.icon !== null ?
+                                    <img
+                                        src={categoriesIconsMap[item.icon]}
+                                        alt={categoriesIconsMap[item.icon]}
+                                        className="categories__icon"
+                                        id={item.id}
+                                    /> :
+                                        <img src={imagePlaceholderIcon} alt="select image"  className="categories__icon" id={item.id}/>
+
                                 }
                                 {
                                     categoriesUpdating[item.id] ?
                                         <input
-                                            className="categories__item-title"
+                                            className="categories__item-input"
                                             type="text"
                                             defaultValue={item.name}
                                             onKeyPress={onUpdateSubmit}

@@ -1,0 +1,19 @@
+.user-profile__avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #96D6F3;
+}
+
+.user-profile__avatar-initials {
+  display: flex;
+  align-items: flex-end;
+  height: 38px;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 35px;
+  color: white;
+}

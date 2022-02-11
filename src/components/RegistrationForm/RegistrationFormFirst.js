@@ -36,7 +36,9 @@ function RegistrationFormFirst(props) {
 
     const { register, handleSubmit, errors, formState } = useForm({ mode: "onChange" });
 
-    const onSubmit = data => {
+    const onSubmit = (data, event) => {
+        event.preventDefault();
+
         props.addRegistrationData(data);
 
         API.post(`auth/checkEmail`, data)

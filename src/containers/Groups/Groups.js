@@ -6,7 +6,6 @@ import GroupsList from "../../components/Groups/GroupsList";
 import {useDispatch, useSelector} from "react-redux";
 import {selectGroups} from "../../features/groupsSlice";
 import {setGroups} from "../../features/groupsSlice";
-import axios from "axios";
 import GroupsCreationModal from "../../components/Groups/GroupsCreationModal";
 import {useMediaQuery} from "react-responsive";
 import API from '../../api'
